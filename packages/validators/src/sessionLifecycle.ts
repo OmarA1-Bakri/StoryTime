@@ -20,6 +20,7 @@ const allowedTransitions: Record<SessionState, SessionState[]> = {
   recording_starting: ["recording", "failed", "abandoned"],
   recording: ["storytelling", "checkpoint", "ending", "paused", "failed", "abandoned"],
   storytelling: ["checkpoint", "ending", "paused", "audio_fallback", "failed", "abandoned"],
+  audio_fallback: ["storytelling", "checkpoint", "ending", "paused", "failed", "abandoned"],
   checkpoint: ["storytelling", "ending", "paused", "completed", "failed", "abandoned"],
   ending: ["completed", "paused", "failed", "abandoned"],
   paused: ["storytelling", "ending", "completed", "failed", "abandoned"],
