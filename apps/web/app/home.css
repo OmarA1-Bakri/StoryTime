@@ -1,0 +1,11 @@
+.landing { padding: 32px; display: grid; gap: 28px; align-content: center; }
+.hero { max-width: 920px; padding: 42px; border: 1px solid rgba(244,201,121,.28); background: var(--panel); border-radius: 28px; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+.eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 800; }
+h1 { font-size: clamp(38px, 7vw, 76px); line-height: .94; margin: 0 0 22px; }
+.lede { color: var(--muted); font-size: clamp(18px, 2.6vw, 24px); max-width: 720px; }
+.actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.primary, .secondary { border-radius: 999px; padding: 14px 18px; text-decoration: none; font-weight: 800; }
+.primary { background: var(--gold); color: #170f20; }
+.secondary { border: 1px solid rgba(247,234,208,.25); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 14px; max-width: 920px; }
+.grid article { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.07); color: var(--parchment); }
