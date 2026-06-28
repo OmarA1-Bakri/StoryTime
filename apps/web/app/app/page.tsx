@@ -4,9 +4,9 @@ import "./shell.css";
 const actions = [
   { href: "/demo", title: "Start demo call", copy: "Run the protected adventure-call flow." },
   { href: "/app/library", title: "Story library", copy: "Review saved chapters." },
-  { href: "/app/settings", title: "Settings", copy: "Manage storage, controls, and beta limits." }
+  { href: "/app/preferences", title: "Preferences", copy: "Review limits, controls, and beta settings." }
 ];
 
 export default function AppDashboard() {
-  return <main className="appShell"><section className="appHero"><p className="eyebrow">Dashboard</p><h1>Family story space</h1><p>Start a protected story call, check chapter status, or manage settings.</p></section><section className="appCards">{actions.map((action) => <Link className="appCard" href={action.href} key={action.href}><strong>{action.title}</strong><span>{action.copy}</span></Link>)}</section></main>;
+  return <main className="appShell"><section className="appHero"><p className="eyebrow">Dashboard</p><h1>Family story space</h1><p>Start a protected story call, check chapter status, or manage preferences.</p></section><section className="appCards">{actions.map((action) => <Link className="appCard" href={action.href} key={action.href}><strong>{action.title}</strong><span>{action.copy}</span></Link>)}</section></main>;
 }
