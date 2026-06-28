@@ -1,0 +1,35 @@
+{
+  "name": "storitime",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:mobile": "pnpm --filter @storitime/mobile dev",
+    "dev:web": "pnpm --filter @storitime/web dev",
+    "dev:worker": "pnpm --filter @storitime/worker dev",
+    "convex:dev": "convex dev",
+    "convex:codegen": "convex codegen",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:unit": "turbo test:unit",
+    "test:e2e": "turbo test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "turbo build",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "env:check": "tsx infra/scripts/check-env.ts",
+    "seed:dev": "tsx infra/scripts/seed-dev.ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.0.0",
+    "prettier": "^3.0.0",
+    "tsx": "^4.0.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}

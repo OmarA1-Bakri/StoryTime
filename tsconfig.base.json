@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "checkJs": false,
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@storitime/types": ["packages/types/src"],
+      "@storitime/validators": ["packages/validators/src"],
+      "@storitime/prompts": ["packages/prompts/src"],
+      "@storitime/config": ["packages/config/src"],
+      "@storitime/ui-tokens": ["packages/ui-tokens/src"]
+    }
+  }
+}
