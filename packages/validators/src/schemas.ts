@@ -10,6 +10,7 @@ export const sessionStates = [
   "recording_starting",
   "recording",
   "storytelling",
+  "audio_fallback",
   "checkpoint",
   "ending",
   "paused",
