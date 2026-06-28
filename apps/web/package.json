@@ -1,0 +1,24 @@
+{
+  "name": "@storitime/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "lint": "next lint || eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No web tests yet\"",
+    "test:unit": "echo \"No web unit tests yet\"",
+    "test:e2e": "echo \"No web e2e tests yet\"",
+    "build": "next build"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}
