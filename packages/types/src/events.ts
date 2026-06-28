@@ -1,0 +1,30 @@
+export const analyticsEvents = [
+  "app_opened",
+  "protected_gate_viewed",
+  "vpc_started",
+  "vpc_completed",
+  "child_profile_created",
+  "call_started",
+  "call_alert_sent",
+  "call_accepted",
+  "adult_connected",
+  "remote_adult_confirmed",
+  "child_handoff_started",
+  "recording_started",
+  "story_setup_started",
+  "story_seed_locked",
+  "turn_started",
+  "turn_submitted",
+  "stt_completed",
+  "story_beat_generated",
+  "image_generated",
+  "baton_passed",
+  "audio_fallback_started",
+  "checkpoint_shown",
+  "session_completed",
+  "composition_ready",
+  "story_replayed",
+  "deletion_completed"
+] as const;
+
+export type AnalyticsEventName = (typeof analyticsEvents)[number];

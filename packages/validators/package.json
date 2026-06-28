@@ -12,6 +12,9 @@
     "test:e2e": "echo \"No validators e2e tests yet\"",
     "build": "tsc --noEmit"
   },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
   "devDependencies": {
     "typescript": "^5.0.0"
   }
