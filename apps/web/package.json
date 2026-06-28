@@ -9,12 +9,13 @@
     "dev": "next dev",
     "lint": "next lint || eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"No web tests yet\"",
-    "test:unit": "echo \"No web unit tests yet\"",
+    "test": "vitest run",
+    "test:unit": "vitest run",
     "test:e2e": "echo \"No web e2e tests yet\"",
     "build": "next build"
   },
   "dependencies": {
+    "@storytime/validators": "workspace:*",
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -26,6 +27,7 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
   }
 }
