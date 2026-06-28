@@ -1,3 +1,3 @@
 export function workerStatus(): string {
-  return "StoriTime worker scaffold ready";
+  return "StoryTime worker scaffold ready";
 }

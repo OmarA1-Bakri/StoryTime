@@ -1,17 +1,38 @@
-# StoriTime Implementation Plan
+# StoryTime Implementation Plan
 
-Status: placeholder.
+Status: PRD v0.5 ingested.
 
-The implementation plan will be generated after PRD ingestion.
+## Canonical naming
 
-## Planned workflow
+- Product name: StoryTime
+- Repository: StoryTime
+- Root package: storytime
+- Workspace namespace: @storytime/*
 
-1. Ingest and canonicalise the full PRD/spec.
-2. Extract product requirements, technical requirements, hard gates, loops, dependencies, and acceptance criteria.
-3. Break work into Linear epics and implementation tickets.
-4. Sequence implementation by phase.
-5. Create the first implementation branch only after task decomposition is complete.
+## First implementation target
 
-## Current phase
+Start with Phase 0 repo bootstrap. The next practical task is to make the monorepo installable, buildable, typed, and deployable.
 
-Phase 0 — Setup Operating System.
+## Required first checks
+
+```bash
+pnpm install
+pnpm format:check
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+## Vercel web target
+
+The Next.js app lives in `apps/web`.
+
+Use this deployment shape:
+
+```text
+Root Directory: apps/web
+Framework Preset: Next.js
+Install Command: pnpm install
+Build Command: pnpm build
+```
