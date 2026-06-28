@@ -1,5 +1,15 @@
-# Infra
+# StoryTime Infrastructure
 
-Infrastructure placeholder.
+Local services:
 
-Do not add production credentials. Deployment and storage configuration must be documented and validated through hard gates.
+- Redis for LiveKit coordination and future queues.
+- LiveKit for realtime audio/video development.
+- MinIO for local S3-compatible storage.
+
+Start local infrastructure:
+
+```bash
+bash infra/scripts/setup-local.sh
+```
+
+No production credentials belong in this repository.
