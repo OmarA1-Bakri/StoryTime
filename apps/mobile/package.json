@@ -1,5 +1,5 @@
 {
-  "name": "@storitime/mobile",
+  "name": "@storytime/mobile",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "test": "echo \"No mobile tests yet\"",
     "test:unit": "echo \"No mobile unit tests yet\"",
     "test:e2e": "echo \"No mobile e2e tests yet\"",
-    "build": "echo \"Mobile build placeholder pending PRD ingestion\""
+    "build": "echo \"Mobile build placeholder pending repo bootstrap completion\""
   },
   "dependencies": {
     "expo": "^53.0.0",

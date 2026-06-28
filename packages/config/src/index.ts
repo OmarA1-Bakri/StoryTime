@@ -1,4 +1,4 @@
 export const appConfig = {
-  appName: "StoriTime",
-  implementationLockedUntilPrdIngested: true
+  appName: "StoryTime",
+  implementationLockedUntilRepoBootstrapPasses: true
 } as const;

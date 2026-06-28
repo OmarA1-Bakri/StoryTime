@@ -1,13 +1,13 @@
 {
-  "name": "storitime",
+  "name": "storytime",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@10.0.0",
   "scripts": {
     "dev": "turbo dev",
-    "dev:mobile": "pnpm --filter @storitime/mobile dev",
-    "dev:web": "pnpm --filter @storitime/web dev",
-    "dev:worker": "pnpm --filter @storitime/worker dev",
+    "dev:mobile": "pnpm --filter @storytime/mobile dev",
+    "dev:web": "pnpm --filter @storytime/web dev",
+    "dev:worker": "pnpm --filter @storytime/worker dev",
     "convex:dev": "convex dev",
     "convex:codegen": "convex codegen",
     "lint": "turbo lint",
@@ -19,17 +19,21 @@
     "format:check": "prettier --check .",
     "build": "turbo build",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "clean": "turbo clean && rm -rf node_modules",
     "env:check": "tsx infra/scripts/check-env.ts",
     "seed:dev": "tsx infra/scripts/seed-dev.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "dotenv": "^16.4.7",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
     "prettier": "^3.0.0",
     "tsx": "^4.0.0",
     "turbo": "^2.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0",
+    "zod": "^3.23.8"
   }
 }

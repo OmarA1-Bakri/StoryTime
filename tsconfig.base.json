@@ -15,11 +15,11 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@storitime/types": ["packages/types/src"],
-      "@storitime/validators": ["packages/validators/src"],
-      "@storitime/prompts": ["packages/prompts/src"],
-      "@storitime/config": ["packages/config/src"],
-      "@storitime/ui-tokens": ["packages/ui-tokens/src"]
+      "@storytime/types": ["packages/types/src"],
+      "@storytime/validators": ["packages/validators/src"],
+      "@storytime/prompts": ["packages/prompts/src"],
+      "@storytime/config": ["packages/config/src"],
+      "@storytime/ui-tokens": ["packages/ui-tokens/src"]
     }
   }
 }
