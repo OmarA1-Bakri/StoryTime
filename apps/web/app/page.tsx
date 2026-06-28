@@ -1,4 +1,5 @@
 import Link from "next/link";
+import "./home.css";
 
 const cards = [
   "Adult-controlled consent and handoff",

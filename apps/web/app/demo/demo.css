@@ -1,0 +1,22 @@
+.demoShell { min-height: 100vh; display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 28px; padding: 28px; }
+.rail { padding: 28px; border-radius: 28px; background: rgba(255,255,255,.07); border: 1px solid rgba(244,201,121,.22); }
+.rail h1 { font-size: 42px; line-height: 1; }
+.meter { height: 8px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; margin: 22px 0; }
+.meter span { display: block; height: 100%; background: var(--gold); transition: width .25s ease; }
+nav { display: grid; gap: 8px; }
+nav button, .demoControls button, .ghost { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: var(--parchment); padding: 12px 14px; border-radius: 14px; text-align: left; }
+nav .active { border-color: var(--gold); color: var(--gold); }
+.phoneFrame { max-width: 520px; width: 100%; justify-self: center; align-self: center; min-height: 720px; padding: 22px; border-radius: 42px; background: linear-gradient(160deg, rgba(73,50,88,.96), rgba(17,10,25,.96)); border: 10px solid #08060c; box-shadow: 0 30px 90px rgba(0,0,0,.55); display: grid; place-items: center; }
+.panel, .storyRoom { width: 100%; padding: 26px; border-radius: 28px; background: rgba(255,255,255,.08); border: 1px solid rgba(244,201,121,.18); }
+.panel h2, .storyRoom h2 { font-size: 34px; line-height: 1.02; margin-top: 0; }
+.panel p { color: var(--muted); font-size: 17px; }
+.gold, .baton { border: none; border-radius: 999px; background: var(--gold); color: #170f20; padding: 14px 18px; font-weight: 900; margin-right: 10px; margin-top: 14px; }
+.diceGrid { display: grid; gap: 10px; }
+.diceGrid div { padding: 14px; border-radius: 18px; background: rgba(255,255,255,.1); }
+.diceGrid span { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.videos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.videos div { height: 110px; display: grid; place-items: center; border-radius: 18px; background: rgba(0,0,0,.28); color: var(--muted); }
+.canvas { min-height: 260px; margin: 14px 0; padding: 18px; border-radius: 24px; background: radial-gradient(circle at center, rgba(244,201,121,.2), rgba(255,255,255,.06)); }
+.recording { color: var(--danger); font-weight: 800; }
+.demoControls { position: fixed; right: 28px; bottom: 28px; display: flex; gap: 10px; }
+@media (max-width: 820px) { .demoShell { grid-template-columns: 1fr; padding: 16px; } .phoneFrame { min-height: 620px; } }
