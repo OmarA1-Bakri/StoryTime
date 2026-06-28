@@ -1,0 +1,12 @@
+import Link from "next/link";
+import "./shell.css";
+
+const actions = [
+  { href: "/demo", title: "Start demo call", copy: "Run the protected adventure-call flow." },
+  { href: "/app/vault", title: "Replay vault", copy: "Review private saved chapters." },
+  { href: "/app/settings", title: "Settings", copy: "Manage storage, controls, and beta limits." }
+];
+
+export default function AppDashboard() {
+  return <main className="appShell"><section className="appHero"><p className="eyebrow">Dashboard</p><h1>Family story space</h1><p>Start a protected story call, check replay status, or manage settings.</p></section><section className="appCards">{actions.map((action) => <Link className="appCard" href={action.href} key={action.href}><strong>{action.title}</strong><span>{action.copy}</span></Link>)}</section></main>;
+}

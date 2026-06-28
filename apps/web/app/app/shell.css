@@ -1,0 +1,8 @@
+.appShell { min-height: 100vh; padding: 32px; display: grid; gap: 22px; align-content: start; }
+.appHero { max-width: 900px; border: 1px solid rgba(244,201,121,.22); background: var(--panel); padding: 32px; border-radius: 28px; }
+.appHero h1 { font-size: clamp(36px, 6vw, 64px); margin: 0 0 14px; }
+.appHero p { color: var(--muted); font-size: 18px; }
+.appCards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; max-width: 960px; }
+.appCard { display: grid; gap: 8px; text-decoration: none; padding: 20px; border-radius: 22px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+.appCard strong { color: var(--parchment); font-size: 18px; }
+.appCard span { color: var(--muted); }
