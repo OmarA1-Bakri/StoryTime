@@ -1,4 +1,5 @@
 import { MockStructuredStoryProvider } from "./story/StructuredStoryProvider";
+import { MockTextProvider } from "./text/TextProvider";
 
 export type WorkerProviderMode = "mock" | "live";
 
@@ -8,4 +9,8 @@ export function resolveWorkerProviderMode(value: string | undefined): WorkerProv
 
 export function createStoryProvider() {
   return new MockStructuredStoryProvider();
+}
+
+export function createTextProvider() {
+  return new MockTextProvider();
 }
