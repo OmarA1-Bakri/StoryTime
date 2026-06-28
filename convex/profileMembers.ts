@@ -27,3 +27,16 @@ export const addMember = mutation({
     return await ctx.db.insert("accessGrants", { profileId: args.profileId, adultUserId: args.memberUserId, role: args.role, status: "active", invitedBy: args.requesterUserId, createdAt: now(), updatedAt: now() });
   }
 });
+
+export const removeMember = mutation({
+  args: { profileId: v.id("profiles"), requesterUserId: v.id("users"), memberUserId: v.id("users") },
+  handler: async (ctx, args) => {
+    const requester = await requireGrant(ctx, args.requesterUserId, args.profileId);
+    assert(requester.role === "owner", "owner_required", "Owner role required");
+    assert(args.requesterUserId !== args.memberUserId, "self_remove_blocked", "Owner cannot remove their own member record");
+    const existing = await ctx.db.query("accessGrants").withIndex("by_profile_adult", (q) => q.eq("profileId", args.profileId).eq("adultUserId", args.memberUserId)).unique();
+    assert(existing, "member_missing", "Member grant not found");
+    await ctx.db.patch(existing._id, { status: "revoked", updatedAt: now() });
+    return existing._id;
+  }
+});
