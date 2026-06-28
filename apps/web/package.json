@@ -2,6 +2,10 @@
   "name": "@storytime/web",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x",
+    "pnpm": "9.x"
+  },
   "scripts": {
     "dev": "next dev",
     "lint": "next lint || eslint .",
