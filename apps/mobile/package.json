@@ -2,6 +2,7 @@
   "name": "@storytime/mobile",
   "version": "0.0.0",
   "private": true,
+  "main": "expo-router/entry",
   "scripts": {
     "dev": "expo start --dev-client",
     "lint": "eslint .",
@@ -9,11 +10,31 @@
     "test": "echo \"No mobile tests yet\"",
     "test:unit": "echo \"No mobile unit tests yet\"",
     "test:e2e": "echo \"No mobile e2e tests yet\"",
-    "build": "echo \"Mobile build placeholder pending repo bootstrap completion\""
+    "build": "echo \"Mobile build requires Expo dev build credentials\""
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^11.4.1",
     "expo": "^53.0.0",
+    "expo-constants": "^17.0.0",
+    "expo-dev-client": "^5.0.0",
+    "expo-linking": "^7.0.0",
+    "expo-local-authentication": "^16.0.0",
+    "expo-notifications": "^0.31.0",
+    "expo-router": "^5.0.0",
+    "expo-secure-store": "^14.0.0",
     "react": "^19.0.0",
-    "react-native": "^0.79.0"
+    "react-hook-form": "^7.53.0",
+    "react-native": "^0.79.0",
+    "react-native-gesture-handler": "^2.20.0",
+    "react-native-reanimated": "^3.16.0",
+    "react-native-safe-area-context": "^5.0.0",
+    "react-native-screens": "^4.0.0",
+    "react-native-svg": "^15.8.0",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.0.0"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "StoryTime",
+    "slug": "storytime",
+    "scheme": "storytime",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "plugins": ["expo-router"],
+    "ios": { "supportsTablet": true },
+    "android": { "adaptiveIcon": { "backgroundColor": "#100b17" } }
+  }
+}
