@@ -6,84 +6,37 @@ const profileAge = v.union(v.literal("6-8"), v.literal("9-10"), v.literal("11-12
 const seed = v.object({ character: v.string(), setting: v.string(), problem: v.string(), tone: v.string(), visualFormat: v.string() });
 
 export default defineSchema({
-  users: defineTable({
-    email: v.string(),
-    displayName: v.optional(v.string()),
-    authProvider: v.union(v.literal("apple"), v.literal("google"), v.literal("email"), v.literal("mock")),
-    role: v.literal("adult"),
-    status: v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_email", ["email"]).index("by_status", ["status"]),
+  users: defineTable({ email: v.string(), displayName: v.optional(v.string()), authProvider: v.union(v.literal("apple"), v.literal("google"), v.literal("email"), v.literal("mock")), role: v.literal("adult"), status: v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_email", ["email"]).index("by_status", ["status"]),
 
-  profiles: defineTable({
-    ownerUserId: v.id("users"),
-    displayName: v.string(),
-    ageBand: profileAge,
-    avatarKey: v.optional(v.string()),
-    replayAllowedForProfile: v.boolean(),
-    status: v.union(v.literal("active"), v.literal("archived"), v.literal("deleted")),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_owner", ["ownerUserId"]).index("by_status", ["status"]),
+  profiles: defineTable({ ownerUserId: v.id("users"), displayName: v.string(), ageBand: profileAge, avatarKey: v.optional(v.string()), replayAllowedForProfile: v.boolean(), status: v.union(v.literal("active"), v.literal("archived"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_owner", ["ownerUserId"]).index("by_status", ["status"]),
 
-  accessGrants: defineTable({
-    profileId: v.id("profiles"),
-    adultUserId: v.id("users"),
-    role: v.union(v.literal("owner"), v.literal("co_parent"), v.literal("grandparent"), v.literal("guardian")),
-    status: v.union(v.literal("active"), v.literal("invited"), v.literal("revoked")),
-    invitedBy: v.optional(v.id("users")),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_profile", ["profileId"]).index("by_adult", ["adultUserId"]).index("by_profile_adult", ["profileId", "adultUserId"]),
+  accessGrants: defineTable({ profileId: v.id("profiles"), adultUserId: v.id("users"), role: v.union(v.literal("owner"), v.literal("co_parent"), v.literal("grandparent"), v.literal("guardian")), status: v.union(v.literal("active"), v.literal("invited"), v.literal("revoked")), invitedBy: v.optional(v.id("users")), createdAt: ts, updatedAt: ts }).index("by_profile", ["profileId"]).index("by_adult", ["adultUserId"]).index("by_profile_adult", ["profileId", "adultUserId"]),
 
-  consentRecords: defineTable({
-    userId: v.id("users"),
-    profileId: v.optional(v.id("profiles")),
-    status: v.union(v.literal("not_started"), v.literal("pending"), v.literal("verified"), v.literal("rejected"), v.literal("revoked"), v.literal("expired")),
-    method: v.union(v.literal("mock"), v.literal("payment_card"), v.literal("government_id"), v.literal("platform_vpc"), v.literal("provider_hosted")),
-    provider: v.union(v.literal("mock"), v.literal("stripe_identity"), v.literal("kws"), v.literal("other")),
-    providerReference: v.optional(v.string()),
-    noticeVersion: v.string(),
-    privacyPolicyVersion: v.string(),
-    termsVersion: v.string(),
-    verifiedAt: v.optional(ts),
-    revokedAt: v.optional(ts),
-    expiresAt: v.optional(ts),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_user", ["userId"]).index("by_profile", ["profileId"]).index("by_status", ["status"]),
+  consentRecords: defineTable({ userId: v.id("users"), profileId: v.optional(v.id("profiles")), status: v.union(v.literal("not_started"), v.literal("pending"), v.literal("verified"), v.literal("rejected"), v.literal("revoked"), v.literal("expired")), method: v.union(v.literal("mock"), v.literal("payment_card"), v.literal("government_id"), v.literal("platform_vpc"), v.literal("provider_hosted")), provider: v.union(v.literal("mock"), v.literal("stripe_identity"), v.literal("kws"), v.literal("other")), providerReference: v.optional(v.string()), noticeVersion: v.string(), privacyPolicyVersion: v.string(), termsVersion: v.string(), verifiedAt: v.optional(ts), revokedAt: v.optional(ts), expiresAt: v.optional(ts), createdAt: ts, updatedAt: ts }).index("by_user", ["userId"]).index("by_profile", ["profileId"]).index("by_status", ["status"]),
 
-  campaigns: defineTable({
-    ownerUserId: v.id("users"),
-    profileId: v.id("profiles"),
-    title: v.string(),
-    status: v.union(v.literal("active"), v.literal("paused"), v.literal("completed"), v.literal("archived"), v.literal("deleted")),
-    storySeed: v.optional(seed),
-    campaignSummary: v.optional(v.string()),
-    visualContinuityNotes: v.optional(v.string()),
-    lastPlayedAt: v.optional(ts),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_owner", ["ownerUserId"]).index("by_profile", ["profileId"]).index("by_status", ["status"]),
+  campaigns: defineTable({ ownerUserId: v.id("users"), profileId: v.id("profiles"), title: v.string(), status: v.union(v.literal("active"), v.literal("paused"), v.literal("completed"), v.literal("archived"), v.literal("deleted")), storySeed: v.optional(seed), campaignSummary: v.optional(v.string()), visualContinuityNotes: v.optional(v.string()), lastPlayedAt: v.optional(ts), createdAt: ts, updatedAt: ts }).index("by_owner", ["ownerUserId"]).index("by_profile", ["profileId"]).index("by_status", ["status"]),
 
-  sessions: defineTable({
-    campaignId: v.id("campaigns"),
-    profileId: v.id("profiles"),
-    startedByUserId: v.id("users"),
-    nearbyAdultUserId: v.optional(v.id("users")),
-    status: v.string(),
-    currentPhase: v.union(v.literal("waiting"), v.literal("adult_connect"), v.literal("handoff"), v.literal("setup"), v.literal("story"), v.literal("checkpoint"), v.literal("ending"), v.literal("done")),
-    livekitRoomName: v.string(),
-    activeSpeakerParticipantId: v.optional(v.string()),
-    batonHolderParticipantId: v.optional(v.string()),
-    checkpointIntervalMinutes: v.number(),
-    nextCheckpointAt: v.optional(ts),
-    startedAt: v.optional(ts),
-    storyStartedAt: v.optional(ts),
-    endedAt: v.optional(ts),
-    failureReason: v.optional(v.string()),
-    createdAt: ts,
-    updatedAt: ts
-  }).index("by_campaign", ["campaignId"]).index("by_profile", ["profileId"]).index("by_started_by", ["startedByUserId"]).index("by_status", ["status"]).index("by_room", ["livekitRoomName"])
+  sessions: defineTable({ campaignId: v.id("campaigns"), profileId: v.id("profiles"), startedByUserId: v.id("users"), nearbyAdultUserId: v.optional(v.id("users")), status: v.string(), currentPhase: v.union(v.literal("waiting"), v.literal("adult_connect"), v.literal("handoff"), v.literal("setup"), v.literal("story"), v.literal("checkpoint"), v.literal("ending"), v.literal("done")), livekitRoomName: v.string(), activeSpeakerParticipantId: v.optional(v.string()), batonHolderParticipantId: v.optional(v.string()), checkpointIntervalMinutes: v.number(), nextCheckpointAt: v.optional(ts), startedAt: v.optional(ts), storyStartedAt: v.optional(ts), endedAt: v.optional(ts), failureReason: v.optional(v.string()), createdAt: ts, updatedAt: ts }).index("by_campaign", ["campaignId"]).index("by_profile", ["profileId"]).index("by_started_by", ["startedByUserId"]).index("by_status", ["status"]).index("by_room", ["livekitRoomName"]),
+
+  presence: defineTable({ sessionId: v.id("sessions"), userId: v.optional(v.id("users")), profileId: v.optional(v.id("profiles")), participantId: v.string(), participantType: v.union(v.literal("remote_adult"), v.literal("nearby_adult"), v.literal("young_participant"), v.literal("egress"), v.literal("system")), displayName: v.string(), status: v.union(v.literal("waiting"), v.literal("connected"), v.literal("handoff"), v.literal("in_story"), v.literal("audio_fallback"), v.literal("left")), lastSeenAt: ts }).index("by_session", ["sessionId"]).index("by_participant", ["participantId"]),
+
+  storyChoices: defineTable({ sessionId: v.id("sessions"), campaignId: v.id("campaigns"), profileId: v.id("profiles"), roundIndex: v.number(), category: v.union(v.literal("character"), v.literal("setting"), v.literal("problem"), v.literal("tone"), v.literal("visual_format")), options: v.array(v.string()), selectedValue: v.optional(v.string()), selectedByParticipantId: v.optional(v.string()), lockedAt: v.optional(ts), createdAt: ts }).index("by_session", ["sessionId"]).index("by_campaign", ["campaignId"]),
+
+  turns: defineTable({ sessionId: v.id("sessions"), campaignId: v.id("campaigns"), turnIndex: v.number(), speakerParticipantId: v.string(), speakerRole: v.union(v.literal("remote_adult"), v.literal("young_participant")), status: v.string(), rawAudioAssetId: v.optional(v.id("assets")), transcript: v.optional(v.string()), transcriptConfidence: v.optional(v.number()), storyBeat: v.optional(v.string()), caption: v.optional(v.string()), imagePrompt: v.optional(v.string()), imageAssetId: v.optional(v.id("assets")), nextTurnPrompt: v.optional(v.string()), safetyStatus: v.union(v.literal("pending"), v.literal("approved"), v.literal("modified"), v.literal("blocked")), videoTimestampMs: v.optional(v.number()), errorCode: v.optional(v.string()), createdAt: ts, updatedAt: ts }).index("by_session", ["sessionId"]).index("by_campaign", ["campaignId"]),
+
+  recordings: defineTable({ sessionId: v.id("sessions"), campaignId: v.id("campaigns"), profileId: v.id("profiles"), ownerUserId: v.id("users"), status: v.string(), egressIds: v.array(v.string()), rawTrackAssetIds: v.array(v.id("assets")), finalVideoAssetId: v.optional(v.id("assets")), thumbnailAssetId: v.optional(v.id("assets")), durationSeconds: v.optional(v.number()), storageBytes: v.optional(v.number()), startedAt: v.optional(ts), stoppedAt: v.optional(ts), readyAt: v.optional(ts), failureReason: v.optional(v.string()), createdAt: ts, updatedAt: ts }).index("by_session", ["sessionId"]).index("by_profile", ["profileId"]).index("by_owner", ["ownerUserId"]).index("by_status", ["status"]),
+
+  compositionEvents: defineTable({ sessionId: v.id("sessions"), recordingId: v.optional(v.id("recordings")), eventType: v.string(), actorParticipantId: v.optional(v.string()), timestampMs: v.number(), wallClockTime: ts, payload: v.any(), createdAt: ts }).index("by_session", ["sessionId"]).index("by_recording", ["recordingId"]).index("by_session_timestamp", ["sessionId", "timestampMs"]),
+
+  compositionJobs: defineTable({ sessionId: v.id("sessions"), recordingId: v.id("recordings"), status: v.union(v.literal("queued"), v.literal("processing"), v.literal("ready"), v.literal("failed"), v.literal("cancelled")), attemptCount: v.number(), lastError: v.optional(v.string()), outputAssetId: v.optional(v.id("assets")), queuedAt: ts, startedAt: v.optional(ts), finishedAt: v.optional(ts), updatedAt: ts }).index("by_status", ["status"]).index("by_recording", ["recordingId"]),
+
+  assets: defineTable({ ownerUserId: v.id("users"), profileId: v.optional(v.id("profiles")), sessionId: v.optional(v.id("sessions")), recordingId: v.optional(v.id("recordings")), type: v.string(), storageProvider: v.union(v.literal("r2"), v.literal("local")), bucket: v.string(), key: v.string(), mimeType: v.string(), sizeBytes: v.optional(v.number()), checksum: v.optional(v.string()), access: v.literal("private"), status: v.union(v.literal("uploading"), v.literal("ready"), v.literal("failed"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_owner", ["ownerUserId"]).index("by_session", ["sessionId"]).index("by_recording", ["recordingId"]).index("by_key", ["bucket", "key"]),
+
+  storageUsage: defineTable({ userId: v.id("users"), usedBytes: v.number(), limitBytes: v.number(), lastCalculatedAt: ts, createdAt: ts, updatedAt: ts }).index("by_user", ["userId"]),
+  entitlements: defineTable({ userId: v.id("users"), plan: v.union(v.literal("free"), v.literal("family"), v.literal("pro"), v.literal("vault")), storageLimitBytes: v.number(), weeklyAdventureCredits: v.number(), remainingAdventureCredits: v.number(), visualTier: v.union(v.literal("basic"), v.literal("standard"), v.literal("premium"), v.literal("best")), canDownload: v.boolean(), canCloudBackup: v.boolean(), canRemaster: v.boolean(), active: v.boolean(), provider: v.union(v.literal("mock"), v.literal("revenuecat"), v.literal("stripe"), v.literal("manual")), providerCustomerId: v.optional(v.string()), renewalAt: v.optional(ts), updatedAt: ts }).index("by_user", ["userId"]),
+  usageLedger: defineTable({ userId: v.id("users"), profileId: v.optional(v.id("profiles")), sessionId: v.optional(v.id("sessions")), type: v.string(), quantity: v.number(), estimatedCostUsd: v.optional(v.number()), provider: v.optional(v.string()), createdAt: ts }).index("by_user", ["userId"]).index("by_session", ["sessionId"]),
+  safetyEvents: defineTable({ sessionId: v.optional(v.id("sessions")), turnId: v.optional(v.id("turns")), userId: v.optional(v.id("users")), profileId: v.optional(v.id("profiles")), type: v.string(), severity: v.union(v.literal("low"), v.literal("medium"), v.literal("high")), action: v.union(v.literal("allowed"), v.literal("modified"), v.literal("blocked")), reason: v.string(), createdAt: ts }).index("by_session", ["sessionId"]),
+  dataRemovalRequests: defineTable({ requestedByUserId: v.id("users"), profileId: v.optional(v.id("profiles")), sessionId: v.optional(v.id("sessions")), recordingId: v.optional(v.id("recordings")), status: v.union(v.literal("requested"), v.literal("processing"), v.literal("completed"), v.literal("failed")), scope: v.union(v.literal("recording"), v.literal("session"), v.literal("profile"), v.literal("account")), requestedAt: ts, completedAt: v.optional(ts), lastError: v.optional(v.string()) }).index("by_requester", ["requestedByUserId"]).index("by_status", ["status"]),
+  auditLogs: defineTable({ actorUserId: v.optional(v.id("users")), action: v.string(), targetType: v.string(), targetId: v.optional(v.string()), metadata: v.optional(v.any()), createdAt: ts }).index("by_actor", ["actorUserId"]).index("by_target", ["targetType", "targetId"]),
+  analytics: defineTable({ userId: v.optional(v.id("users")), sessionId: v.optional(v.id("sessions")), eventName: v.string(), payload: v.optional(v.any()), createdAt: ts }).index("by_event", ["eventName"]).index("by_session", ["sessionId"])
 });
