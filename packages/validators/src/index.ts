@@ -2,6 +2,7 @@ export * from "./consent";
 export * from "./recording";
 export * from "./restrictedMode";
 export * from "./schemas";
+export * from "./sessionLifecycle";
 export * from "./story";
 export * from "./usage";
 
