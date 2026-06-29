@@ -14,7 +14,7 @@ export interface ReviewProvider {
 }
 
 export class MockReviewProvider implements ReviewProvider {
-  async check(): Promise<ReviewProviderResult> {
+  async check(_input: ReviewProviderInput): Promise<ReviewProviderResult> {
     return { accepted: true, checkedAt: Date.now() };
   }
 }
