@@ -17,6 +17,7 @@ const requiredRoutes = [
   "app/library/[chapterId]/page.tsx",
   "app/preferences/page.tsx",
   "app/pipeline/page.tsx",
+  "app/metrics/page.tsx",
   "api/health/route.ts",
   "api/demo/session/route.ts",
   "api/demo/chapter-status/route.ts",
