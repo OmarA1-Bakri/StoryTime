@@ -14,6 +14,7 @@ describe("runChapterPipeline", () => {
     });
 
     expect(result.status).toBe("ready");
+    if (result.status === "blocked") throw new Error("pipeline should not be blocked");
     expect(result.story.steps).toHaveLength(2);
     expect(result.replay.outputKey).toContain("session-1");
   });
