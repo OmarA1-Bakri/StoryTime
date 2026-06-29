@@ -21,7 +21,8 @@ const requiredRoutes = [
   "api/demo/session/route.ts",
   "api/demo/chapter-status/route.ts",
   "api/demo/pipeline/route.ts",
-  "api/demo/replay/route.ts"
+  "api/demo/replay/route.ts",
+  "api/demo/readiness/route.ts"
 ];
 
 describe("web route map", () => {
