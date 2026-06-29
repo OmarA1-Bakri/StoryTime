@@ -1,6 +1,7 @@
+import { MockTrackOutputProvider } from "./output/TrackOutputProvider";
+import { MockReviewProvider } from "./review/ReviewProvider";
 import { MockStructuredStoryProvider } from "./story/StructuredStoryProvider";
 import { MockTextProvider } from "./text/TextProvider";
-import { MockTrackOutputProvider } from "./output/TrackOutputProvider";
 
 export type WorkerProviderMode = "mock" | "live";
 
@@ -18,4 +19,8 @@ export function createTextProvider() {
 
 export function createTrackOutputProvider() {
   return new MockTrackOutputProvider();
+}
+
+export function createReviewProvider() {
+  return new MockReviewProvider();
 }
