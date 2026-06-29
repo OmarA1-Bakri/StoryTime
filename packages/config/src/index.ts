@@ -4,3 +4,4 @@ export const appConfig = {
 } as const;
 
 export * from "./providerMode";
+export * from "./productionGuard";
