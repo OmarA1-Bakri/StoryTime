@@ -4,6 +4,8 @@ import "./shell.css";
 const actions = [
   { href: "/demo", title: "Start demo call", copy: "Run the protected adventure-call flow." },
   { href: "/app/library", title: "Story library", copy: "Review saved chapters." },
+  { href: "/app/pipeline", title: "Pipeline status", copy: "Check story, replay, review, and quota readiness." },
+  { href: "/app/metrics", title: "MVP metrics", copy: "Review completion, replay, trust, and economics signals." },
   { href: "/app/preferences", title: "Preferences", copy: "Review limits, controls, and beta settings." }
 ];
 
