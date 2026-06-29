@@ -1,5 +1,6 @@
 import { MockStructuredStoryProvider } from "./story/StructuredStoryProvider";
 import { MockTextProvider } from "./text/TextProvider";
+import { MockTrackOutputProvider } from "./output/TrackOutputProvider";
 
 export type WorkerProviderMode = "mock" | "live";
 
@@ -13,4 +14,8 @@ export function createStoryProvider() {
 
 export function createTextProvider() {
   return new MockTextProvider();
+}
+
+export function createTrackOutputProvider() {
+  return new MockTrackOutputProvider();
 }
