@@ -16,9 +16,12 @@ const requiredRoutes = [
   "app/library/page.tsx",
   "app/library/[chapterId]/page.tsx",
   "app/preferences/page.tsx",
+  "app/pipeline/page.tsx",
   "api/health/route.ts",
   "api/demo/session/route.ts",
-  "api/demo/chapter-status/route.ts"
+  "api/demo/chapter-status/route.ts",
+  "api/demo/pipeline/route.ts",
+  "api/demo/replay/route.ts"
 ];
 
 describe("web route map", () => {
