@@ -6,8 +6,21 @@
     "version": "0.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "plugins": ["expo-router"],
-    "ios": { "supportsTablet": true },
-    "android": { "adaptiveIcon": { "backgroundColor": "#100b17" } }
+    "plugins": ["expo-router", "@livekit/react-native-expo-plugin"],
+    "ios": {
+      "bundleIdentifier": "com.omarbakri.storytime",
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "StoryTime uses the camera during private family story calls.",
+        "NSMicrophoneUsageDescription": "StoryTime uses the microphone during private family story calls."
+      }
+    },
+    "android": {
+      "package": "com.omarbakri.storytime",
+      "versionCode": 1,
+      "permissions": ["CAMERA", "RECORD_AUDIO"],
+      "adaptiveIcon": { "backgroundColor": "#100b17" }
+    }
   }
 }

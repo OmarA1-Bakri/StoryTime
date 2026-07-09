@@ -1,0 +1,47 @@
+import { describe, expect, it } from "vitest";
+import { readProviderCapabilities, summarizeReadiness } from "./capabilities";
+
+const liveEnv = {
+  APP_ENV: "production",
+  NEXT_PUBLIC_CONVEX_URL: "https://example.convex.cloud",
+  LIVEKIT_URL: "wss://example.livekit.cloud",
+  LIVEKIT_API_KEY: "key",
+  LIVEKIT_API_SECRET: "secret",
+  RECORDING_MODE: "live",
+  STORAGE_MODE: "live",
+  STORAGE_PROVIDER: "r2",
+  R2_ENDPOINT: "https://r2.example.com",
+  R2_ACCESS_KEY_ID: "key",
+  R2_SECRET_ACCESS_KEY: "secret",
+  R2_BUCKET_PRIVATE: "private",
+  STT_PROVIDER: "groq",
+  AI_MODE: "live",
+  STORY_PROVIDER: "openai",
+  IMAGE_PROVIDER: "fal",
+  SAFETY_PROVIDER: "openai",
+  VPC_PROVIDER: "kws",
+  BILLING_PROVIDER: "disabled",
+};
+
+describe("provider capability registry", () => {
+  it("reports a live launch-critical environment as ready", () => {
+    const readiness = summarizeReadiness(liveEnv);
+    expect(readiness.ready).toBe(true);
+    expect(readiness.blockers).toEqual([]);
+    expect(readiness.capabilities.find((item) => item.name === "billing")?.state).toBe("missing");
+  });
+
+  it("never treats mock providers as live", () => {
+    const capabilities = readProviderCapabilities({ ...liveEnv, STORY_PROVIDER: "mock" });
+    expect(capabilities.find((item) => item.name === "story")?.state).toBe("mock");
+  });
+
+  it("exposes missing infrastructure without leaking values", () => {
+    const readiness = summarizeReadiness({ APP_ENV: "preview", AI_MODE: "mock" });
+    expect(readiness.ready).toBe(false);
+    expect(readiness.blockers).toContain("realtimeCall");
+    expect(
+      readiness.capabilities.find((item) => item.name === "realtimeCall")?.missingVariables,
+    ).toContain("LIVEKIT_API_SECRET");
+  });
+});

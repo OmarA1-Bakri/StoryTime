@@ -2,7 +2,7 @@
 
 Mobile-first AI-assisted family story-call memory product.
 
-This repository is in Phase 0: repo bootstrap.
+This repository contains the functional StoryTime scaffold and is now entering launch-critical integration work.
 
 ## Canonical naming
 
@@ -13,9 +13,10 @@ This repository is in Phase 0: repo bootstrap.
 
 ## Current status
 
-- Product implementation has not started.
-- PRD v0.5 has been ingested as the implementation source.
-- This scaffold establishes the repo, workspace structure, documentation placeholders, environment guard, and delivery gates before product work begins.
+- The mobile, web, Convex, worker and shared-package foundations are implemented.
+- Most product screens and domain contracts currently remain scaffold or mock-backed.
+- The active delivery target is a real two-device chapter: protected join, LiveKit call, story turns, recording, replay and deletion.
+- Readiness is derived from configured provider capabilities; demo routes must not be treated as release evidence.
 
 ## Web / Next.js
 

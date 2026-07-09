@@ -1,6 +1,6 @@
 # StoryTime Implementation Plan
 
-Status: PRD v0.5 ingested.
+Status: full launch end-state locked; launch-critical integration in progress.
 
 ## Canonical naming
 
@@ -9,9 +9,18 @@ Status: PRD v0.5 ingested.
 - Root package: storytime
 - Workspace namespace: @storytime/*
 
-## First implementation target
+## End state
 
-Start with Phase 0 repo bootstrap. The next practical task is to make the monorepo installable, buildable, typed, and deployable.
+StoryTime must ship as a complete product across the public website, iOS and Android: adult identity and consent, approved-family access, realtime story calls, AI-assisted baton storytelling, recording and replay, private vault, deletion, notifications, entitlements, observability and store-ready operations.
+
+## Delivery sequence
+
+1. Truthful provider readiness and a real LiveKit media foundation.
+2. Adult identity, child profiles, approved-adult invitations and consent enforcement.
+3. Live STT, Story Director, safety and image providers wired into the baton loop.
+4. Recording, composition, private replay, storage lifecycle and deletion.
+5. Push notifications, entitlements, billing, support and operational controls.
+6. Physical-device E2E, privacy/security review, TestFlight/Play testing and controlled public launch.
 
 ## Required first checks
 
