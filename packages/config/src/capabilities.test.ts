@@ -4,6 +4,10 @@ import { readProviderCapabilities, summarizeReadiness } from "./capabilities";
 const liveEnv = {
   APP_ENV: "production",
   NEXT_PUBLIC_CONVEX_URL: "https://example.convex.cloud",
+  IDENTITY_PROVIDER: "clerk",
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_example",
+  CLERK_SECRET_KEY: "sk_test_example",
+  CLERK_JWT_ISSUER_DOMAIN: "https://example.clerk.accounts.dev",
   LIVEKIT_URL: "wss://example.livekit.cloud",
   LIVEKIT_API_KEY: "key",
   LIVEKIT_API_SECRET: "secret",

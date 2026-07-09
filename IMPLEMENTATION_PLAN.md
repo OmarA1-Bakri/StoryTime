@@ -16,7 +16,7 @@ StoryTime must ship as a complete product across the public website, iOS and And
 ## Delivery sequence
 
 1. Truthful provider readiness and a real LiveKit media foundation.
-2. Adult identity, child profiles, approved-adult invitations and consent enforcement.
+2. Adult identity and owner-controlled child profiles are integrated with Clerk and Convex. Complete approved-adult invitations and external parental verification before public launch.
 3. Live STT, Story Director, safety and image providers wired into the baton loop.
 4. Recording, composition, private replay, storage lifecycle and deletion.
 5. Push notifications, entitlements, billing, support and operational controls.

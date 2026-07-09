@@ -8,13 +8,13 @@ export type LiveKitCredentials = {
 
 export type LiveKitCredentialRequest = {
   sessionId: string;
-  participantId: string;
   displayName: string;
   participantType: StoryParticipantType;
 };
 
 export async function fetchLiveKitCredentials(
   input: LiveKitCredentialRequest,
+  sessionToken?: string | null,
 ): Promise<LiveKitCredentials> {
   const apiBaseUrl = process.env.EXPO_PUBLIC_STORYTIME_API_URL;
   if (!apiBaseUrl) throw new Error("EXPO_PUBLIC_STORYTIME_API_URL is not configured");
@@ -23,9 +23,7 @@ export async function fetchLiveKitCredentials(
     method: "POST",
     headers: {
       "content-type": "application/json",
-      ...(process.env.EXPO_PUBLIC_STORYTIME_BETA_ACCESS_KEY
-        ? { "x-storytime-beta-key": process.env.EXPO_PUBLIC_STORYTIME_BETA_ACCESS_KEY }
-        : {}),
+      ...(sessionToken ? { authorization: `Bearer ${sessionToken}` } : {}),
     },
     body: JSON.stringify(input),
   });

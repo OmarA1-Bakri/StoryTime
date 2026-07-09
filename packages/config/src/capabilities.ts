@@ -1,5 +1,6 @@
 export const providerCapabilityNames = [
   "backend",
+  "identity",
   "realtimeCall",
   "recording",
   "storage",
@@ -32,6 +33,11 @@ type CapabilityDefinition = {
 
 const definitions: CapabilityDefinition[] = [
   { name: "backend", requiredVariables: ["NEXT_PUBLIC_CONVEX_URL"] },
+  {
+    name: "identity",
+    providerVariable: "IDENTITY_PROVIDER",
+    requiredVariables: ["NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "CLERK_SECRET_KEY", "CLERK_JWT_ISSUER_DOMAIN"],
+  },
   {
     name: "realtimeCall",
     requiredVariables: ["LIVEKIT_URL", "LIVEKIT_API_KEY", "LIVEKIT_API_SECRET"],

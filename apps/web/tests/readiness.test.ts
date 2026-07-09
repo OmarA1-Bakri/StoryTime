@@ -8,6 +8,6 @@ describe("readiness API", () => {
     expect(response.status).toBe(503);
     expect(json.ok).toBe(false);
     expect(json.blockers).toContain("realtimeCall");
-    expect(json.capabilities).toHaveLength(10);
+    expect(json.capabilities).toHaveLength(11);
   });
 });

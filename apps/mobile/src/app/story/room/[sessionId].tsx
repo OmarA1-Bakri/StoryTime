@@ -1,4 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
+import { useAuth, useUser } from "@clerk/expo";
 import { useState } from "react";
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { StoryCall } from "../../../components/live/StoryCall";
@@ -9,6 +10,8 @@ export default function StoryRoomScreen() {
   const { sessionId } = useLocalSearchParams<{ sessionId: string }>();
   const id = sessionId ?? "demo-session";
   const session = useStorySession(id);
+  const { getToken } = useAuth();
+  const { user } = useUser();
   const [credentials, setCredentials] = useState<LiveKitCredentials | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [joining, setJoining] = useState(false);
@@ -17,12 +20,12 @@ export default function StoryRoomScreen() {
     setJoining(true);
     setError(null);
     try {
+      const sessionToken = await getToken();
       const result = await fetchLiveKitCredentials({
         sessionId: id,
-        participantId: `adult-${Date.now()}`,
-        displayName: "StoryTime adult",
+        displayName: user?.fullName || user?.primaryEmailAddress?.emailAddress || "StoryTime adult",
         participantType: "remote_adult",
-      });
+      }, sessionToken);
       setCredentials(result);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to join the story room");

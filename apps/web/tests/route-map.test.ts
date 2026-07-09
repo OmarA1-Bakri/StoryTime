@@ -6,6 +6,8 @@ const appRoot = path.resolve(process.cwd(), "app");
 
 const requiredRoutes = [
   "page.tsx",
+  "sign-in/[[...sign-in]]/page.tsx",
+  "sign-up/[[...sign-up]]/page.tsx",
   "demo/page.tsx",
   "pricing/page.tsx",
   "privacy/page.tsx",
