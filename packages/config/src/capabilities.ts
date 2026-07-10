@@ -36,7 +36,11 @@ const definitions: CapabilityDefinition[] = [
   {
     name: "identity",
     providerVariable: "IDENTITY_PROVIDER",
-    requiredVariables: ["NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "CLERK_SECRET_KEY", "CLERK_JWT_ISSUER_DOMAIN"],
+    requiredVariables: [
+      "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+      "CLERK_SECRET_KEY",
+      "CLERK_JWT_ISSUER_DOMAIN",
+    ],
   },
   {
     name: "realtimeCall",
@@ -58,15 +62,19 @@ const definitions: CapabilityDefinition[] = [
       "R2_BUCKET_PRIVATE",
     ],
   },
-  { name: "stt", providerVariable: "STT_PROVIDER", requiredVariables: [] },
+  { name: "stt", providerVariable: "STT_PROVIDER", requiredVariables: ["GROQ_API_KEY"] },
   {
     name: "story",
     modeVariable: "AI_MODE",
     providerVariable: "STORY_PROVIDER",
-    requiredVariables: [],
+    requiredVariables: ["OPENAI_API_KEY"],
   },
-  { name: "image", providerVariable: "IMAGE_PROVIDER", requiredVariables: [] },
-  { name: "safety", providerVariable: "SAFETY_PROVIDER", requiredVariables: [] },
+  {
+    name: "image",
+    providerVariable: "IMAGE_PROVIDER",
+    requiredVariables: ["FAL_KEY", "FAL_IMAGE_ENDPOINT"],
+  },
+  { name: "safety", providerVariable: "SAFETY_PROVIDER", requiredVariables: ["OPENAI_API_KEY"] },
   { name: "consent", providerVariable: "VPC_PROVIDER", requiredVariables: [] },
   { name: "billing", providerVariable: "BILLING_PROVIDER", requiredVariables: [] },
 ];

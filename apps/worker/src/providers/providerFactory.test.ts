@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import {
   createStoryProvider,
+  createImageProvider,
   createTextProvider,
   createTrackOutputProvider,
   resolveWorkerProviderMode,
@@ -24,8 +25,11 @@ describe("providerFactory", () => {
     expect(createTrackOutputProvider()).toBeDefined();
   });
 
-  it("refuses to produce mock output in live mode", () => {
+  it("requires live provider credentials instead of silently using mocks", () => {
     process.env.AI_MODE = "live";
-    expect(() => createStoryProvider()).toThrow("refusing to fall back to mock output");
+    delete process.env.OPENAI_API_KEY;
+    delete process.env.FAL_KEY;
+    expect(() => createStoryProvider()).toThrow("OPENAI_API_KEY is required");
+    expect(() => createImageProvider()).toThrow("FAL_KEY is required");
   });
 });

@@ -14,7 +14,8 @@ This repository contains the functional StoryTime scaffold and is now entering l
 ## Current status
 
 - The mobile, web, Convex, worker and shared-package foundations are implemented.
-- Most product screens and domain contracts currently remain scaffold or mock-backed.
+- Adult identity, child-profile ownership, consent capture, native LiveKit rooms, provider readiness,
+  and the guarded live AI provider layer are implemented.
 - The active delivery target is a real two-device chapter: protected join, LiveKit call, story turns, recording, replay and deletion.
 - Readiness is derived from configured provider capabilities; demo routes must not be treated as release evidence.
 
@@ -48,6 +49,8 @@ Build Command: pnpm build
 - Backend: Convex
 - Deployment: Vercel
 - Quality target: local format/lint/typecheck/test/build plus Codacy review
+
+Live AI setup and its fail-closed behavior are documented in `docs/ai-providers.md`.
 
 ## Safety note
 
