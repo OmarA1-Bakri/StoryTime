@@ -4,7 +4,7 @@ Status: v0.5 implementation specification ingested.
 
 The canonical product name is StoryTime.
 
-Current repository priority: complete Phase 0 repo bootstrap before starting product implementation.
+Current repository priority: complete one real launch-critical vertical chapter path before expanding feature breadth.
 
 Build phases:
 

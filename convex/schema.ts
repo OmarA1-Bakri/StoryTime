@@ -6,7 +6,7 @@ const profileAge = v.union(v.literal("6-8"), v.literal("9-10"), v.literal("11-12
 const seed = v.object({ character: v.string(), setting: v.string(), problem: v.string(), tone: v.string(), visualFormat: v.string() });
 
 export default defineSchema({
-  users: defineTable({ email: v.string(), displayName: v.optional(v.string()), authProvider: v.union(v.literal("apple"), v.literal("google"), v.literal("email"), v.literal("mock")), role: v.literal("adult"), status: v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_email", ["email"]).index("by_status", ["status"]),
+  users: defineTable({ email: v.string(), displayName: v.optional(v.string()), authSubject: v.optional(v.string()), authProvider: v.union(v.literal("apple"), v.literal("google"), v.literal("email"), v.literal("clerk"), v.literal("mock")), role: v.literal("adult"), status: v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_email", ["email"]).index("by_auth_subject", ["authSubject"]).index("by_status", ["status"]),
 
   profiles: defineTable({ ownerUserId: v.id("users"), displayName: v.string(), ageBand: profileAge, avatarKey: v.optional(v.string()), replayAllowedForProfile: v.boolean(), status: v.union(v.literal("active"), v.literal("archived"), v.literal("deleted")), createdAt: ts, updatedAt: ts }).index("by_owner", ["ownerUserId"]).index("by_status", ["status"]),
 

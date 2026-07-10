@@ -8,6 +8,14 @@ export async function requireGrant(ctx: QueryCtx | MutationCtx, userId: Id<"user
   return grant;
 }
 
+export async function requireAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
+  const identity = await ctx.auth.getUserIdentity();
+  assert(identity, "authentication_required", "Adult authentication is required");
+  const user = await ctx.db.query("users").withIndex("by_auth_subject", (q) => q.eq("authSubject", identity.subject)).unique();
+  assert(user && user.status === "active", "adult_not_registered", "Authenticated adult is not registered");
+  return user;
+}
+
 export async function hasVerifiedRecord(ctx: QueryCtx | MutationCtx, userId: Id<"users">, profileId: Id<"profiles">) {
   const records = await ctx.db.query("consentRecords").withIndex("by_user", (q) => q.eq("userId", userId)).collect();
   return records.some((record) => record.status === "verified" && (!record.profileId || record.profileId === profileId));

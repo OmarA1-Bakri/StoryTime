@@ -1,10 +1,20 @@
-import type { PutObjectInput, SignedReadUrlInput, StorageProvider, StoredObject } from "./StorageProvider";
+import type {
+  PutObjectInput,
+  SignedReadUrlInput,
+  StorageProvider,
+  StoredObject,
+} from "./StorageProvider";
 
 export class LocalStorageProvider implements StorageProvider {
   private readonly objects = new Map<string, StoredObject>();
 
   async putObject(input: PutObjectInput): Promise<StoredObject> {
-    const object = { bucket: input.bucket, key: input.key, sizeBytes: input.body.byteLength, mimeType: input.mimeType };
+    const object = {
+      bucket: input.bucket,
+      key: input.key,
+      sizeBytes: input.body.byteLength,
+      mimeType: input.mimeType,
+    };
     this.objects.set(`${input.bucket}/${input.key}`, object);
     return object;
   }

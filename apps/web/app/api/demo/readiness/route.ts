@@ -1,16 +1,9 @@
-import { NextResponse } from "next/server";
-
-const items = [
-  "consent",
-  "call",
-  "recording",
-  "recovery",
-  "ledger",
-  "fallbacks",
-  "controls",
-  "costs"
-];
+import { summarizeReadiness } from "@storytime/config";
 
 export async function GET() {
-  return NextResponse.json({ ok: true, items: items.map((name) => ({ name, status: "ready" })) });
+  const readiness = summarizeReadiness(process.env);
+  return Response.json(
+    { ok: readiness.ready, ...readiness },
+    { status: readiness.ready ? 200 : 503 },
+  );
 }
