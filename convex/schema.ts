@@ -72,6 +72,44 @@ export default defineSchema({
     .index("by_status", ["status"])
     .index("by_region_config_status", ["regionKey", "configVersion", "status"]),
 
+  familyMembers: defineTable({
+    familyId: v.id("families"),
+    adultUserId: v.id("users"),
+    role: v.union(v.literal("owner"), v.literal("guardian"), v.literal("approved_adult")),
+    status: v.union(v.literal("active"), v.literal("revoked")),
+    canInviteApprovedAdults: v.boolean(),
+    schemaVersion: v.literal(1),
+    policyVersion: v.literal(1),
+    migrationVersion: v.literal(1),
+    source: v.union(v.literal("created"), v.literal("legacy_backfill")),
+    createdByUserId: v.id("users"),
+    revokedByUserId: v.optional(v.id("users")),
+    revokedAt: v.optional(ts),
+    createdAt: ts,
+    updatedAt: ts,
+  })
+    .index("by_family_adult", ["familyId", "adultUserId"])
+    .index("by_family_role_status", ["familyId", "role", "status"])
+    .index("by_adult_status", ["adultUserId", "status"]),
+
+  familyProfileAssignments: defineTable({
+    familyId: v.id("families"),
+    profileId: v.id("profiles"),
+    memberId: v.id("familyMembers"),
+    status: v.union(v.literal("active"), v.literal("revoked")),
+    replayPermitted: v.boolean(),
+    schemaVersion: v.literal(1),
+    source: v.union(v.literal("created"), v.literal("legacy_backfill")),
+    createdByUserId: v.id("users"),
+    revokedByUserId: v.optional(v.id("users")),
+    revokedAt: v.optional(ts),
+    createdAt: ts,
+    updatedAt: ts,
+  })
+    .index("by_profile_member", ["profileId", "memberId"])
+    .index("by_member_status", ["memberId", "status"])
+    .index("by_family_profile", ["familyId", "profileId"]),
+
   profiles: defineTable({
     familyId: v.optional(v.id("families")),
     tenantMigrationVersion: v.optional(v.number()),

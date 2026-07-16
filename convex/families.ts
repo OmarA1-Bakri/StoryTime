@@ -11,6 +11,7 @@ import type { Id } from "./_generated/dataModel";
 import { internalMutation, mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { requireAuthenticatedUser } from "./guards";
+import { ensureCanonicalOwnerMembership } from "./lib/familyMembership";
 import { now } from "./lib/time";
 
 function currentTenantConfig() {
@@ -42,11 +43,12 @@ export const createMine = mutation({
       ) {
         throw new Error("family_creation_config_conflict");
       }
+      await ensureCanonicalOwnerMembership(ctx, replay, "created");
       return replay._id;
     }
 
     const timestamp = now();
-    return ctx.db.insert("families", {
+    const familyId = await ctx.db.insert("families", {
       ownerUserId: owner._id,
       status: "active",
       ...config,
@@ -55,6 +57,10 @@ export const createMine = mutation({
       createdAt: timestamp,
       updatedAt: timestamp,
     });
+    const family = await ctx.db.get(familyId);
+    if (!family) throw new Error("family_creation_missing");
+    await ensureCanonicalOwnerMembership(ctx, family, "created");
+    return familyId;
   },
 });
 
@@ -135,6 +141,7 @@ export const backfillOwnerProfiles = internalMutation({
         throw new Error("family_migration_config_conflict");
       }
       familyId = selected._id;
+      await ensureCanonicalOwnerMembership(ctx, selected, "legacy_backfill");
     } else {
       const creationRequestId = `legacy_${owner._id}`;
       familyCreationRequestSchema.parse({ creationRequestId });
@@ -155,6 +162,9 @@ export const backfillOwnerProfiles = internalMutation({
         createdAt: timestamp,
         updatedAt: timestamp,
       });
+      const family = await ctx.db.get(familyId);
+      if (!family) throw new Error("family_migration_family_missing");
+      await ensureCanonicalOwnerMembership(ctx, family, "legacy_backfill");
     }
 
     const page = await ctx.db

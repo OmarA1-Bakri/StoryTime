@@ -11,6 +11,21 @@ export type FamilyRole = z.infer<typeof familyRoleSchema>;
 export const familyMemberStatusSchema = z.enum(["active", "revoked"]);
 export type FamilyMemberStatus = z.infer<typeof familyMemberStatusSchema>;
 
+export const familyMemberPolicyMetadataSchema = z.object({
+  role: familyRoleSchema,
+  status: familyMemberStatusSchema,
+  canInviteApprovedAdults: z.boolean(),
+  schemaVersion: z.literal(FAMILY_MEMBER_SCHEMA_VERSION),
+  policyVersion: z.literal(FAMILY_ACCESS_POLICY_VERSION),
+  migrationVersion: z.literal(FAMILY_MEMBERSHIP_MIGRATION_VERSION),
+});
+
+export const familyProfileAssignmentMetadataSchema = z.object({
+  status: familyMemberStatusSchema,
+  replayPermitted: z.boolean(),
+  schemaVersion: z.literal(FAMILY_PROFILE_ASSIGNMENT_SCHEMA_VERSION),
+});
+
 export const accessRoleSchema = familyRoleSchema;
 export const accessStatusSchema = familyMemberStatusSchema;
 

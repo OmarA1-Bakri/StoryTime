@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { FAMILY_CAPABILITIES, authorizeFamilyCapability } from "./access";
+import {
+  FAMILY_ACCESS_POLICY_VERSION,
+  FAMILY_CAPABILITIES,
+  FAMILY_MEMBER_SCHEMA_VERSION,
+  FAMILY_MEMBERSHIP_MIGRATION_VERSION,
+  FAMILY_PROFILE_ASSIGNMENT_SCHEMA_VERSION,
+  authorizeFamilyCapability,
+  familyMemberPolicyMetadataSchema,
+  familyProfileAssignmentMetadataSchema,
+} from "./access";
 import type { FamilyCapability, FamilyRole } from "./access";
 
 const roles = ["owner", "guardian", "approved_adult"] as const satisfies readonly FamilyRole[];
@@ -161,5 +170,34 @@ describe("family capability policy", () => {
         }),
       ).toEqual({ allowed: false, reason: "capability_denied" });
     }
+  });
+});
+
+describe("canonical membership metadata", () => {
+  it("accepts only the current family-member versions", () => {
+    const current = {
+      role: "guardian",
+      status: "active",
+      canInviteApprovedAdults: true,
+      schemaVersion: FAMILY_MEMBER_SCHEMA_VERSION,
+      policyVersion: FAMILY_ACCESS_POLICY_VERSION,
+      migrationVersion: FAMILY_MEMBERSHIP_MIGRATION_VERSION,
+    };
+    expect(familyMemberPolicyMetadataSchema.parse(current)).toEqual(current);
+    expect(() =>
+      familyMemberPolicyMetadataSchema.parse({ ...current, schemaVersion: 2 }),
+    ).toThrow();
+  });
+
+  it("accepts only the current profile-assignment version", () => {
+    const current = {
+      status: "active",
+      replayPermitted: false,
+      schemaVersion: FAMILY_PROFILE_ASSIGNMENT_SCHEMA_VERSION,
+    };
+    expect(familyProfileAssignmentMetadataSchema.parse(current)).toEqual(current);
+    expect(() =>
+      familyProfileAssignmentMetadataSchema.parse({ ...current, schemaVersion: 2 }),
+    ).toThrow();
   });
 });
