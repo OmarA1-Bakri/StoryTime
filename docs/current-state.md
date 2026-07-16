@@ -5,7 +5,7 @@
 | Snapshot date                 | 2026-07-16                                                                                         |
 | Default branch                | `main`                                                                                             |
 | Default-branch commit audited | `6b57b46057b10f90a8ca40d06c3bed28c8c3ae2b`                                                         |
-| Newest implementation branch  | `origin/agent/live-foundation` at `c343667`                                                        |
+| Newest implementation branch  | `codex/ST-100-clerk-binding` at `723bde6`; stacked draft PR #3                                     |
 | Integration work branch       | `codex/ST-000-canonical-baseline`; pushed in draft PR #2                                           |
 | Repository                    | [OmarA1-Bakri/StoryTime](https://github.com/OmarA1-Bakri/StoryTime)                                |
 | Linear project                | [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e) |
@@ -92,6 +92,8 @@ The `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pa
 The `main` branch now requires the `workspace` status check on an up-to-date branch, one approving review, dismissal of stale reviews, and resolved conversations. Force-push and branch deletion are disabled. GitHub secret scanning and push protection are enabled; the alerts API reports zero open alerts. Admin bypass remains available for repository recovery, but the normal merge path is protected.
 
 The live provider adapters now fail closed unless OpenAI ZDR, Groq ZDR, fal private-output, and fal media-retention attestations are exactly `true`. The central production capability registry enforces the same controls, and the web prebuild runs the production environment guard. These flags record verified account state; they do not configure a provider or replace the remaining legal, regional, deletion, synthetic-spike, and processor review. No real child data was sent.
+
+The focused `codex/ST-100-clerk-binding` branch is stacked on the canonical baseline in [draft PR #3](https://github.com/OmarA1-Bakri/StoryTime/pull/3). It adds verified-subject adult bootstrap, signed Clerk lifecycle synchronization, replay and restrictive-ordering policy, a private allowlisted Convex service boundary, and focused regression tests. Its full local `pnpm check` passed, but the package remains in review because Clerk and Convex are not linked, generated Convex types and deployed ingress were not exercised, and broader caller-selected actor IDs remain ST-102/ST-108 work.
 
 ### Remaining recovery action
 

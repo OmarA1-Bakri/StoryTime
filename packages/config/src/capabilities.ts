@@ -30,6 +30,7 @@ type CapabilityDefinition = {
   providerVariable?: string;
   requiredVariables: string[];
   requiredValues?: Record<string, string>;
+  requiredMinimumLengths?: Record<string, number>;
 };
 
 const definitions: CapabilityDefinition[] = [
@@ -41,7 +42,12 @@ const definitions: CapabilityDefinition[] = [
       "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
       "CLERK_SECRET_KEY",
       "CLERK_JWT_ISSUER_DOMAIN",
+      "CLERK_INSTANCE_ID",
+      "CLERK_WEBHOOK_SIGNING_SECRET",
+      "CLERK_SYNC_SECRET",
+      "CONVEX_SITE_URL",
     ],
+    requiredMinimumLengths: { CLERK_SYNC_SECRET: 32 },
   },
   {
     name: "realtimeCall",
@@ -112,7 +118,10 @@ export function readProviderCapabilities(env: CapabilityEnvironment): ProviderCa
     const mode = definition.modeVariable ? env[definition.modeVariable] : undefined;
     const missingVariables = definition.requiredVariables.filter((key) => {
       const requiredValue = definition.requiredValues?.[key];
-      return requiredValue === undefined ? !env[key] : env[key] !== requiredValue;
+      const minimumLength = definition.requiredMinimumLengths?.[key];
+      if (requiredValue !== undefined) return env[key] !== requiredValue;
+      if (minimumLength !== undefined) return !env[key] || env[key].length < minimumLength;
+      return !env[key];
     });
     const explicitlyMock = provider === "mock" || mode === "mock" || mode === "local";
     const providerConfigured = definition.providerVariable

@@ -23,7 +23,10 @@ export async function requireAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
     .withIndex("by_auth_subject", (q) => q.eq("authSubject", identity.subject))
     .unique();
   assert(
-    user && user.status === "active",
+    user &&
+      user.status === "active" &&
+      user.identityStatus !== "disabled" &&
+      user.identityStatus !== "deleted",
     "adult_not_registered",
     "Authenticated adult is not registered",
   );
