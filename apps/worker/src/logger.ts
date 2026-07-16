@@ -9,5 +9,5 @@ export const logger = {
   },
   error(message: string, context: LogContext = {}) {
     console.error(JSON.stringify({ level: "error", message, ...context }));
-  }
+  },
 };

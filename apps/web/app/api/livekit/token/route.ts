@@ -5,9 +5,13 @@ import { z } from "zod";
 export const runtime = "nodejs";
 
 const tokenRequestSchema = z.object({
-  sessionId: z.string().min(1).max(100).regex(/^[a-zA-Z0-9_-]+$/),
+  sessionId: z
+    .string()
+    .min(1)
+    .max(100)
+    .regex(/^[a-zA-Z0-9_-]+$/),
   displayName: z.string().trim().min(1).max(80),
-  participantType: z.enum(["remote_adult", "nearby_adult"])
+  participantType: z.enum(["remote_adult", "nearby_adult"]),
 });
 
 export async function POST(request: Request) {
@@ -22,9 +26,17 @@ export async function POST(request: Request) {
   }
 
   let body: unknown;
-  try { body = await request.json(); } catch { return Response.json({ error: "invalid_json" }, { status: 400 }); }
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: "invalid_json" }, { status: 400 });
+  }
   const parsed = tokenRequestSchema.safeParse(body);
-  if (!parsed.success) return Response.json({ error: "invalid_request", details: parsed.error.flatten().fieldErrors }, { status: 400 });
+  if (!parsed.success)
+    return Response.json(
+      { error: "invalid_request", details: parsed.error.flatten().fieldErrors },
+      { status: 400 },
+    );
 
   const { sessionId, displayName, participantType } = parsed.data;
   const participantId = `${userId}-${participantType}`;
@@ -32,8 +44,14 @@ export async function POST(request: Request) {
     identity: participantId,
     name: displayName,
     ttl: "15m",
-    metadata: JSON.stringify({ sessionId, participantType, clerkUserId: userId })
+    metadata: JSON.stringify({ sessionId, participantType, clerkUserId: userId }),
   });
-  token.addGrant({ room: `storytime-${sessionId}`, roomJoin: true, canPublish: true, canSubscribe: true, canPublishData: true });
+  token.addGrant({
+    room: `storytime-${sessionId}`,
+    roomJoin: true,
+    canPublish: true,
+    canSubscribe: true,
+    canPublishData: true,
+  });
   return Response.json({ serverUrl, token: await token.toJwt(), expiresInSeconds: 900 });
 }

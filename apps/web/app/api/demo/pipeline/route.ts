@@ -7,11 +7,11 @@ export async function GET() {
     story: {
       status: "ready",
       turns: 2,
-      title: "Rania and the Space Princess"
+      title: "Rania and the Space Princess",
     },
     replay: {
       status: "ready",
-      outputKey: "outputs/demo-session/chapter.mp4"
-    }
+      outputKey: "outputs/demo-session/chapter.mp4",
+    },
   });
 }

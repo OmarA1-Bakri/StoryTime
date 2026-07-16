@@ -60,7 +60,7 @@ CI may split these jobs, but `pnpm check` must represent the documented merge ga
 | Web desktop       | Latest two Chrome, Safari, and Edge majors                                            |
 | Web responsive    | iPhone-sized Safari and common Android Chrome viewports                               |
 | Networks          | Stable Wi-Fi, 4G/5G, latency/jitter/loss simulation, disconnect/reconnect             |
-| Participant pairs | mobile↔mobile, web remote adult↔mobile child side, supported web↔web               |
+| Participant pairs | mobile↔mobile, web remote adult↔mobile child side, supported web↔web                  |
 
 Firefox is best effort until explicitly certified. Simulator/emulator results do not replace at least one physical iOS and Android run for camera, microphone, push, backgrounding, and reconnect.
 

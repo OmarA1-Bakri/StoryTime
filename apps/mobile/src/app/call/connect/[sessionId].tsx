@@ -13,7 +13,9 @@ export default function Connect() {
     <Screen>
       <Text variant="label">Connect</Text>
       <Text variant="title">Host is visible</Text>
-      <Text>Session: {id}. Status: {link.status}. Confirm the host before handoff.</Text>
+      <Text>
+        Session: {id}. Status: {link.status}. Confirm the host before handoff.
+      </Text>
       <Button onPress={link.open}>Open session</Button>
       <Link href={`/call/handoff/${id}`} asChild>
         <Button tone="secondary">Continue</Button>

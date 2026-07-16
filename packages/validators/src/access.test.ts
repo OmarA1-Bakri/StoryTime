@@ -12,8 +12,8 @@ describe("access validators", () => {
         profileId: "profile_1",
         requestedByUserId: "user_1",
         targetUserId: "user_2",
-        role: "guardian"
-      })
+        role: "guardian",
+      }),
     ).toMatchObject({ targetUserId: "user_2" });
   });
 
@@ -23,8 +23,8 @@ describe("access validators", () => {
         profileId: "profile_1",
         requestedByUserId: "user_1",
         targetUserId: "user_2",
-        role: "owner"
-      })
+        role: "owner",
+      }),
     ).toThrow();
   });
 
@@ -33,8 +33,8 @@ describe("access validators", () => {
       revokeAccessGrantSchema.parse({
         profileId: "profile_1",
         requesterUserId: "user_1",
-        targetUserId: "user_2"
-      })
+        targetUserId: "user_2",
+      }),
     ).toMatchObject({ requesterUserId: "user_1" });
   });
 });

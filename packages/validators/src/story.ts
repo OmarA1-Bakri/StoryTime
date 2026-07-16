@@ -5,7 +5,7 @@ export const storySeedSchema = z.object({
   setting: z.string().min(1),
   problem: z.string().min(1),
   tone: z.string().min(1),
-  visualFormat: z.string().min(1)
+  visualFormat: z.string().min(1),
 });
 
 export const storyBeatOutputSchema = z.object({
@@ -13,5 +13,5 @@ export const storyBeatOutputSchema = z.object({
   caption: z.string().min(1),
   imagePrompt: z.string().min(1),
   nextTurnPrompt: z.string().min(1),
-  safetyStatus: z.enum(["approved", "modified", "blocked"])
+  safetyStatus: z.enum(["approved", "modified", "blocked"]),
 });

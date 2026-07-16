@@ -21,11 +21,15 @@ export default function StoryRoomScreen() {
     setError(null);
     try {
       const sessionToken = await getToken();
-      const result = await fetchLiveKitCredentials({
-        sessionId: id,
-        displayName: user?.fullName || user?.primaryEmailAddress?.emailAddress || "StoryTime adult",
-        participantType: "remote_adult",
-      }, sessionToken);
+      const result = await fetchLiveKitCredentials(
+        {
+          sessionId: id,
+          displayName:
+            user?.fullName || user?.primaryEmailAddress?.emailAddress || "StoryTime adult",
+          participantType: "remote_adult",
+        },
+        sessionToken,
+      );
       setCredentials(result);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to join the story room");

@@ -14,20 +14,24 @@ export const planLimitSchema = z.object({
   canDownload: z.boolean(),
   canCloudBackup: z.boolean(),
   canRemaster: z.boolean(),
-  active: z.boolean()
+  active: z.boolean(),
 });
 
 export const storageUsageSchema = z.object({
   userId: z.string().min(1),
   usedBytes: z.number().int().nonnegative(),
   limitBytes: z.number().int().positive(),
-  lastCalculatedAt: z.number().positive()
+  lastCalculatedAt: z.number().positive(),
 });
 
 export function hasAdventureCredit(input: { remainingAdventureCredits: number }): boolean {
   return input.remainingAdventureCredits > 0;
 }
 
-export function hasStorageCapacity(input: { usedBytes: number; limitBytes: number; additionalBytes: number }): boolean {
+export function hasStorageCapacity(input: {
+  usedBytes: number;
+  limitBytes: number;
+  additionalBytes: number;
+}): boolean {
   return input.usedBytes + input.additionalBytes <= input.limitBytes;
 }

@@ -4,7 +4,7 @@ const childSafeRoutePrefixes = [
   "/story/room",
   "/story/audio-fallback",
   "/story/paused",
-  "/story/ending"
+  "/story/ending",
 ];
 
 const adultOnlyRoutePrefixes = [
@@ -17,15 +17,19 @@ const adultOnlyRoutePrefixes = [
   "/call/connect",
   "/call/confirm",
   "/call/waiting",
-  "/story/checkpoint"
+  "/story/checkpoint",
 ];
 
 export function isChildSafeRoute(pathname: string): boolean {
-  return childSafeRoutePrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  return childSafeRoutePrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
 }
 
 export function isAdultOnlyRoute(pathname: string): boolean {
-  return adultOnlyRoutePrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  return adultOnlyRoutePrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
 }
 
 export function requireChildSafeRoute(pathname: string): void {

@@ -14,6 +14,6 @@ export function buildOutputPlan(input: OutputPlanInput): OutputPlan {
   return {
     sessionId: input.sessionId,
     canRender: input.trackKeys.length > 0 && input.timelineEventCount > 0,
-    outputKey: `outputs/${input.sessionId}/chapter.mp4`
+    outputKey: `outputs/${input.sessionId}/chapter.mp4`,
   };
 }

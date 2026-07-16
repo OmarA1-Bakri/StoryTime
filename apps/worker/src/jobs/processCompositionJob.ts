@@ -12,13 +12,15 @@ export type CompositionJobOutput = {
   error?: string;
 };
 
-export async function processCompositionJob(input: CompositionJobInput): Promise<CompositionJobOutput> {
+export async function processCompositionJob(
+  input: CompositionJobInput,
+): Promise<CompositionJobOutput> {
   if (input.rawTrackCount < 1) {
     return { status: "failed", error: "missing_raw_track" };
   }
   return {
     status: "ready",
     outputAssetKey: `replays/${input.recordingId}.mp4`,
-    thumbnailAssetKey: `thumbnails/${input.recordingId}.jpg`
+    thumbnailAssetKey: `thumbnails/${input.recordingId}.jpg`,
   };
 }

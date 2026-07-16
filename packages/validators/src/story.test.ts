@@ -9,8 +9,8 @@ describe("story validators", () => {
         setting: "Moon garden",
         problem: "Lost starlight",
         tone: "Silly and brave",
-        visualFormat: "Warm storybook"
-      })
+        visualFormat: "Warm storybook",
+      }),
     ).toMatchObject({ character: "Space princess" });
   });
 
@@ -21,8 +21,8 @@ describe("story validators", () => {
         caption: "caption",
         imagePrompt: "prompt",
         nextTurnPrompt: "next",
-        safetyStatus: "approved"
-      })
+        safetyStatus: "approved",
+      }),
     ).toThrow();
   });
 });

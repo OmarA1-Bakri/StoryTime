@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { canStartReplayProcessing, isReplayRecoverableState, isReplayTerminalState } from "./replayLifecycle";
+import {
+  canStartReplayProcessing,
+  isReplayRecoverableState,
+  isReplayTerminalState,
+} from "./replayLifecycle";
 
 describe("replay lifecycle", () => {
   it("starts processing when tracks are ready", () => {

@@ -14,8 +14,8 @@ describe("processTurn", () => {
         setting: "Moon garden",
         problem: "Lost light",
         tone: "brave",
-        visualFormat: "storybook"
-      }
+        visualFormat: "storybook",
+      },
     });
     expect(result.safetyStatus).toBe("approved");
     expect(result.storyBeat).toContain("Explorer");

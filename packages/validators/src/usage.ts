@@ -7,7 +7,7 @@ export const usageTypeSchema = z.enum([
   "composition_minutes",
   "storage_bytes_added",
   "replay_streamed",
-  "adventure_credit_debit"
+  "adventure_credit_debit",
 ]);
 
 export const usageLedgerInputSchema = z.object({
@@ -15,5 +15,5 @@ export const usageLedgerInputSchema = z.object({
   type: usageTypeSchema,
   quantity: z.number().nonnegative(),
   estimatedCostUsd: z.number().nonnegative().optional(),
-  provider: z.string().optional()
+  provider: z.string().optional(),
 });

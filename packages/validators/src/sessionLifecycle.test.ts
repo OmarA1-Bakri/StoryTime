@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { assertSessionTransition, canTransitionSession, isSessionState, nextSessionStates } from "./sessionLifecycle";
+import {
+  assertSessionTransition,
+  canTransitionSession,
+  isSessionState,
+  nextSessionStates,
+} from "./sessionLifecycle";
 
 describe("session lifecycle", () => {
   it("recognizes declared session states", () => {
@@ -14,7 +19,9 @@ describe("session lifecycle", () => {
   });
 
   it("rejects jumping straight from created to storytelling", () => {
-    expect(() => assertSessionTransition("created", "storytelling")).toThrow("Invalid session transition");
+    expect(() => assertSessionTransition("created", "storytelling")).toThrow(
+      "Invalid session transition",
+    );
   });
 
   it("treats completed as terminal", () => {

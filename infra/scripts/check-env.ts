@@ -10,7 +10,7 @@ const requiredProductionVariables = [
   "R2_BUCKET_PRIVATE",
   "LIVEKIT_URL",
   "LIVEKIT_API_KEY",
-  "LIVEKIT_API_SECRET"
+  "LIVEKIT_API_SECRET",
 ];
 
 const mockProviderVariables = [
@@ -20,7 +20,7 @@ const mockProviderVariables = [
   "STORY_PROVIDER",
   "IMAGE_PROVIDER",
   "SAFETY_PROVIDER",
-  "BILLING_PROVIDER"
+  "BILLING_PROVIDER",
 ];
 
 function fail(message: string): never {

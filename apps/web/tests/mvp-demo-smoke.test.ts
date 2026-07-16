@@ -6,7 +6,14 @@ import { GET as replay } from "../app/api/demo/replay/route";
 describe("MVP demo smoke", () => {
   it("reports a healthy story and replay surface", async () => {
     await expect((await health()).json()).resolves.toMatchObject({ ok: true });
-    await expect((await pipeline()).json()).resolves.toMatchObject({ ok: true, story: { status: "ready" }, replay: { status: "ready" } });
-    await expect((await replay()).json()).resolves.toMatchObject({ ok: true, replay: { status: "ready" } });
+    await expect((await pipeline()).json()).resolves.toMatchObject({
+      ok: true,
+      story: { status: "ready" },
+      replay: { status: "ready" },
+    });
+    await expect((await replay()).json()).resolves.toMatchObject({
+      ok: true,
+      replay: { status: "ready" },
+    });
   });
 });

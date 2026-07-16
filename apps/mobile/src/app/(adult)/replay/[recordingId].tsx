@@ -16,8 +16,12 @@ export default function ReplayDetail() {
       <Text>Recording {id} is ready to review, download, or remove from the family vault.</Text>
       <Text>Status: {actions.status}</Text>
       <Button onPress={actions.play}>Play replay</Button>
-      <Button tone="secondary" onPress={actions.requestDownload}>Download</Button>
-      <Button tone="danger" onPress={actions.requestRemoval}>Request removal</Button>
+      <Button tone="secondary" onPress={actions.requestDownload}>
+        Download
+      </Button>
+      <Button tone="danger" onPress={actions.requestRemoval}>
+        Request removal
+      </Button>
     </Screen>
   );
 }

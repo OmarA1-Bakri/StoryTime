@@ -1,4 +1,8 @@
-export default async function RecordPreviewPage({ params }: { params: Promise<{ sessionId: string }> }) {
+export default async function RecordPreviewPage({
+  params,
+}: {
+  params: Promise<{ sessionId: string }>;
+}) {
   const { sessionId } = await params;
 
   return (

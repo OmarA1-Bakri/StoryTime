@@ -116,7 +116,7 @@ Native call delivery, design system, observability, security, and test automatio
 | `ST-007` | Linear reconciliation                   | 60 legacy issues compared with code; stale setup issues closed/updated; partial tickets split; new phase/package mapping created          |
 | `ST-008` | Secret/repository protection            | Secret scan clean; GitHub secret scanning/push protection/branch rules enabled where account supports it                                  |
 | `ST-009` | Deployment/account inventory            | Convex, Vercel, LiveKit, R2, Clerk, AI, EAS, Apple, Google, monitoring, billing, consent provider status recorded without secrets         |
-| `ST-010` | LiveKit spike                           | Web↔mobile and mobile↔mobile join/reconnect; separate-track egress feasibility and timing measured using synthetic media                |
+| `ST-010` | LiveKit spike                           | Web↔mobile and mobile↔mobile join/reconnect; separate-track egress feasibility and timing measured using synthetic media                  |
 | `ST-011` | AI-turn spike                           | Bounded synthetic audio through STT→structured story→safety→image/fallback; latency and cost measured                                     |
 | `ST-012` | Composition spike                       | Two synthetic tracks + ledger → 720p replay; sync, duration, CPU, scratch, storage measured                                               |
 | `ST-013` | Architecture decision closure           | Decision log records queue, worker runtime, web scope, retention defaults, output format, state migration, and branch recovery            |
@@ -195,7 +195,7 @@ Two synthetic adults on separate clients share one synthetic child profile throu
 | `ST-212` | Presence and duplicate clients | Idempotent participant identity, heartbeats, stale cleanup                                             |
 | `ST-213` | End/cancel cleanup             | Room/session terminal state; notifications/tokens invalid; no orphan                                   |
 | `ST-214` | Call metrics                   | Funnel, join latency, reconnect, failure code without content                                          |
-| `ST-215` | Two-device E2E matrix          | Mobile↔mobile, web↔mobile, supported web↔web; physical iOS/Android smoke                            |
+| `ST-215` | Two-device E2E matrix          | Mobile↔mobile, web↔mobile, supported web↔web; physical iOS/Android smoke                               |
 
 ### Exit scenario
 

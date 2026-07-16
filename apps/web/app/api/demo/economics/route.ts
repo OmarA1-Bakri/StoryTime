@@ -8,7 +8,7 @@ export async function GET() {
       storyCalls: 8,
       imageCalls: 8,
       storageBytes: 128000000,
-      estimatedCostUsd: 0.42
-    }
+      estimatedCostUsd: 0.42,
+    },
   });
 }

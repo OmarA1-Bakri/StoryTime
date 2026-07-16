@@ -10,7 +10,7 @@ export function loadWorkerConfig(env: NodeJS.ProcessEnv = process.env): WorkerCo
     appEnv: (env.APP_ENV as WorkerConfig["appEnv"]) ?? "development",
     aiMode: (env.AI_MODE as WorkerConfig["aiMode"]) ?? "mock",
     storageProvider: env.R2_BUCKET_PRIVATE ? "r2" : "local",
-    compositionConcurrency: Number(env.COMPOSITION_CONCURRENCY ?? 1)
+    compositionConcurrency: Number(env.COMPOSITION_CONCURRENCY ?? 1),
   };
 }
 
