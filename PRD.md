@@ -14,6 +14,8 @@ This document is the product source of truth for StoryTime. It supersedes the at
 
 The implementation details in [docs/architecture.md](docs/architecture.md), state invariants in [docs/state-machines.md](docs/state-machines.md), release evidence in [docs/acceptance-test-plan.md](docs/acceptance-test-plan.md), and delivery order in [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) are normative extensions of this PRD.
 
+Current repository priority: complete one real launch-critical vertical chapter path before expanding feature breadth.
+
 ## 1. Executive decision
 
 StoryTime turns a live video call between a child and a trusted remote adult into a guided, co-created story chapter and then into a private replayable family memory.

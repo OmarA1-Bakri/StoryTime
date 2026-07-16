@@ -24,6 +24,14 @@ Read in order:
 
 Historical PDFs, prototypes, previous stub documents, and legacy Linear tickets are supporting evidence only when they conflict with this pack.
 
+Current foundation status:
+
+- The mobile, web, Convex, worker and shared-package foundations are implemented.
+- Adult identity, child-profile ownership, consent capture, native LiveKit rooms, provider readiness,
+  and the guarded live AI provider layer are implemented.
+- The active delivery target is a real two-device chapter: protected join, LiveKit call, story turns, recording, replay and deletion.
+- Readiness is derived from configured provider capabilities; demo routes must not be treated as release evidence.
+
 ## Repository shape
 
 ```text
@@ -48,6 +56,8 @@ WSL2 or Linux is recommended for web/backend/worker and Android-oriented develop
 - FFmpeg/ffprobe;
 - Android Studio/SDK for local Android work;
 - on macOS, Xcode and CocoaPods for local iOS work, or the EAS CLI/account path for remote builds.
+
+Live AI setup and its fail-closed behavior are documented in `docs/ai-providers.md`.
 
 Then:
 

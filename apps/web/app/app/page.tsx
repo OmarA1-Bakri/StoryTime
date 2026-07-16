@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import "./shell.css";
 
 const actions = [
@@ -9,6 +11,8 @@ const actions = [
   { href: "/app/preferences", title: "Preferences", copy: "Review limits, controls, and beta settings." }
 ];
 
-export default function AppDashboard() {
-  return <main className="appShell"><section className="appHero"><p className="eyebrow">Dashboard</p><h1>Family story space</h1><p>Start a protected story call, check chapter status, or manage preferences.</p></section><section className="appCards">{actions.map((action) => <Link className="appCard" href={action.href} key={action.href}><strong>{action.title}</strong><span>{action.copy}</span></Link>)}</section></main>;
+export default async function AppDashboard() {
+  const { userId } = await auth();
+  const user = userId ? await currentUser() : null;
+  return <main className="appShell"><section className="appHero"><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><p className="eyebrow">Adult dashboard</p>{userId ? <UserButton /> : null}</div><h1>{user?.firstName ? `Welcome, ${user.firstName}` : "Family story space"}</h1><p>Start a protected story call, check chapter status, or manage preferences.</p></section><section className="appCards">{actions.map((action) => <Link className="appCard" href={action.href} key={action.href}><strong>{action.title}</strong><span>{action.copy}</span></Link>)}</section></main>;
 }

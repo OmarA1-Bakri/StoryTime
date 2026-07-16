@@ -27,6 +27,8 @@ The implementation is complete only when an authorized family can, on production
 10. reconcile chapter usage/cost;
 11. operate and recover the system safely.
 
+The preserved `agent/live-foundation` work supplies initial Clerk, LiveKit, provider-readiness, and guarded AI adapters. Those foundations are evidence for the packages below, not proof that their end-to-end acceptance gates are complete.
+
 A static demo, mock provider, placeholder script, web-only flow, typecheck-only mobile app, unverified deployment, or uncomposed recording is not completion.
 
 ## 2. Execution rules
