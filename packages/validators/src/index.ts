@@ -1,4 +1,5 @@
 export * from "./access";
+export * from "./clerkIdentity";
 export * from "./connectionHealth";
 export * from "./consent";
 export * from "./heartbeat";
@@ -9,6 +10,7 @@ export * from "./replayLifecycle";
 export * from "./restrictedMode";
 export * from "./schemas";
 export * from "./sessionLifecycle";
+export * from "./serviceBoundary";
 export * from "./story";
 export * from "./storyFlow";
 export * from "./usage";

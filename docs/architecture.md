@@ -183,6 +183,9 @@ Clerk `subject` is mapped to an internal adult `user`. Convex functions resolve 
 
 Webhook/user synchronisation is idempotent and preserves disabled/deleted status. Account deletion does not orphan family ownership; ownership transfer or family deletion must resolve first.
 
+The concrete verified-token, signed-webhook, replay, ordering, and service-secret boundary is recorded
+in [identity-sync.md](identity-sync.md).
+
 ### 6.2 Authorization model
 
 Authorization is evaluated by a single policy module with:

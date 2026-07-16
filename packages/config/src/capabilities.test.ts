@@ -8,6 +8,10 @@ const liveEnv = {
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_example",
   CLERK_SECRET_KEY: "sk_test_example",
   CLERK_JWT_ISSUER_DOMAIN: "https://example.clerk.accounts.dev",
+  CLERK_INSTANCE_ID: "ins_storytime_prod",
+  CLERK_WEBHOOK_SIGNING_SECRET: "whsec_example",
+  CLERK_SYNC_SECRET: "s".repeat(32),
+  CONVEX_SITE_URL: "https://example.convex.site",
   LIVEKIT_URL: "wss://example.livekit.cloud",
   LIVEKIT_API_KEY: "key",
   LIVEKIT_API_SECRET: "secret",
@@ -46,6 +50,14 @@ describe("provider capability registry", () => {
   it("never treats mock providers as live", () => {
     const capabilities = readProviderCapabilities({ ...liveEnv, STORY_PROVIDER: "mock" });
     expect(capabilities.find((item) => item.name === "story")?.state).toBe("mock");
+  });
+
+  it("requires the server-only Clerk lifecycle sync boundary", () => {
+    const capabilities = readProviderCapabilities({ ...liveEnv, CLERK_SYNC_SECRET: "too-short" });
+    expect(capabilities.find((item) => item.name === "identity")).toMatchObject({
+      state: "missing",
+      missingVariables: ["CLERK_SYNC_SECRET"],
+    });
   });
 
   it("exposes missing infrastructure without leaking values", () => {

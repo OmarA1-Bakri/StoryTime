@@ -13,7 +13,7 @@ const seed = v.object({
 
 export default defineSchema({
   users: defineTable({
-    email: v.string(),
+    email: v.optional(v.string()),
     displayName: v.optional(v.string()),
     authSubject: v.optional(v.string()),
     authProvider: v.union(
@@ -25,12 +25,35 @@ export default defineSchema({
     ),
     role: v.literal("adult"),
     status: v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")),
+    identityStatus: v.optional(
+      v.union(v.literal("active"), v.literal("disabled"), v.literal("deleted")),
+    ),
+    identityUpdatedAt: v.optional(ts),
+    lastIdentityEventId: v.optional(v.string()),
+    disabledAt: v.optional(ts),
+    deletedAt: v.optional(ts),
     createdAt: ts,
     updatedAt: ts,
   })
     .index("by_email", ["email"])
     .index("by_auth_subject", ["authSubject"])
     .index("by_status", ["status"]),
+
+  identitySyncEvents: defineTable({
+    provider: v.literal("clerk"),
+    eventId: v.string(),
+    eventType: v.union(
+      v.literal("user.created"),
+      v.literal("user.updated"),
+      v.literal("user.deleted"),
+    ),
+    userId: v.id("users"),
+    outcome: v.union(v.literal("applied"), v.literal("stale"), v.literal("terminal")),
+    occurredAt: ts,
+    processedAt: ts,
+  })
+    .index("by_event_id", ["eventId"])
+    .index("by_user", ["userId"]),
 
   profiles: defineTable({
     ownerUserId: v.id("users"),
