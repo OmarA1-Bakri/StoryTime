@@ -21,7 +21,10 @@ The record stores:
 
 Owner/status, owner/request, status, and region/config/status indexes avoid full-table discovery.
 Owner-only get/list functions derive the current adult from verified auth and return no cross-owner
-record. Family membership and delegated roles are deliberately deferred to ST-102.
+record. `ST-102` adds versioned `familyMembers` and `familyProfileAssignments`. Every new or
+replayed family creation ensures one owner membership, while authorization rejects a missing,
+duplicate, or mismatched owner instead of synthesizing authority. The retained legacy profile fields
+remain an additive rollback bridge.
 
 `STORYTIME_DATA_REGION` is server-only. Local synthetic development defaults to `local`; preview
 and production family creation refuse missing, malformed, or `local` regions. The production
@@ -55,11 +58,14 @@ a production backfill until backup/restore and parity evidence exists.
 
 ## Explicit exclusions and incomplete evidence
 
-- `accessGrants` remains legacy input; `familyMembers` and centralized RBAC are ST-102.
-- Consent-first child records are ST-103; invitations are ST-104.
+- `authorization-policy.md` records the ST-102 role matrix, enforcement order, additive migration,
+  rollback contract, and remaining authorization exclusions.
+- Consent-first child records are ST-103; invitations are ST-104; durable consent gates are ST-106.
 - Propagating `familyId` across campaigns, sessions, media, jobs, playback, storage, and
-  entitlements belongs to their owning packages and ST-108 authorization verification.
-- Ownership transfer, owner deletion, family deletion, and erasure remain ST-102/ST-600 work.
+  entitlements belongs to their owning packages and ST-108 cross-resource authorization
+  verification.
+- Recent auth is ST-112; ownership transfer, owner deletion, family deletion, and erasure remain
+  ST-600 work.
 - Full `AT-ID-001` and `AT-ID-002` remain open.
 - The current environment has no linked Convex deployment, generated types, Convex integration
   harness, migration run, concurrency proof, index proof, or deployed parity report. ST-101 must

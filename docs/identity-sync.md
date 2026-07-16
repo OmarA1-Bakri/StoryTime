@@ -65,10 +65,10 @@ The deleted internal tombstone preserves existing references and denies activity
 ownership transfer/deletion policy and the ST-600 erasure workflow must resolve its owned resources.
 This package is not complete until that deployed fail-closed behavior is proven.
 
-ST-100 also does not claim repository-wide removal of caller-selected actor IDs. Existing grant,
-profile-member, and profile-invite entry points still accept actor identifiers and must be migrated
-to the authenticated internal user in ST-102/ST-108 before the broader `AT-ID-001` control can be
-closed.
+ST-102 removes caller-selected acting-adult IDs from the selected family, profile, join, and
+session-start operations and centralizes their membership checks. `ST-108` must still inventory
+every remaining Convex, web, mobile, worker, media, and deletion surface before the broader
+`AT-ID-001` control can close.
 
 References: [Clerk webhook overview](https://clerk.com/docs/guides/development/webhooks/overview),
 [Clerk data synchronization](https://clerk.com/docs/guides/development/webhooks/syncing), and
