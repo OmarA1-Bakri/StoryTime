@@ -55,7 +55,26 @@ export default defineSchema({
     .index("by_event_id", ["eventId"])
     .index("by_user", ["userId"]),
 
+  families: defineTable({
+    ownerUserId: v.id("users"),
+    status: v.union(v.literal("active"), v.literal("deleting"), v.literal("deleted")),
+    regionKey: v.string(),
+    configVersion: v.number(),
+    schemaVersion: v.literal(1),
+    creationRequestId: v.string(),
+    origin: v.union(v.literal("created"), v.literal("legacy_backfill")),
+    deletedAt: v.optional(ts),
+    createdAt: ts,
+    updatedAt: ts,
+  })
+    .index("by_owner_status", ["ownerUserId", "status"])
+    .index("by_owner_creation_request", ["ownerUserId", "creationRequestId"])
+    .index("by_status", ["status"])
+    .index("by_region_config_status", ["regionKey", "configVersion", "status"]),
+
   profiles: defineTable({
+    familyId: v.optional(v.id("families")),
+    tenantMigrationVersion: v.optional(v.number()),
     ownerUserId: v.id("users"),
     displayName: v.string(),
     ageBand: profileAge,
@@ -65,6 +84,7 @@ export default defineSchema({
     createdAt: ts,
     updatedAt: ts,
   })
+    .index("by_family_status", ["familyId", "status"])
     .index("by_owner", ["ownerUserId"])
     .index("by_status", ["status"]),
 

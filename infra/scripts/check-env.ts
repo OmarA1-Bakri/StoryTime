@@ -8,6 +8,7 @@ const isProduction = appEnv === "production";
 const requiredProductionVariables = [
   "CONVEX_DEPLOYMENT",
   "NEXT_PUBLIC_CONVEX_URL",
+  "STORYTIME_DATA_REGION",
   "R2_BUCKET_MEDIA",
   "R2_BUCKET_PRIVATE",
   "LIVEKIT_URL",
@@ -42,6 +43,10 @@ if (isProduction) {
 
   if (process.env.R2_PUBLIC_BASE_URL && process.env.R2_PUBLIC_BASE_URL.includes("public")) {
     fail("R2 public base URL must not imply public write access");
+  }
+
+  if (process.env.STORYTIME_DATA_REGION === "local") {
+    fail("Production family data region must be an explicit hosted region");
   }
 
   const readiness = summarizeReadiness(process.env);
