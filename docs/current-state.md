@@ -5,7 +5,7 @@
 | Snapshot date                 | 2026-07-16                                                                                         |
 | Default branch                | `main`                                                                                             |
 | Default-branch commit audited | `6b57b46057b10f90a8ca40d06c3bed28c8c3ae2b`                                                         |
-| Newest implementation branch  | `codex/ST-100-clerk-binding` at `723bde6`; stacked draft PR #3                                     |
+| Newest implementation branch  | `codex/ST-101-family-tenancy` at `058dd9d`; stacked draft PR #4                                    |
 | Integration work branch       | `codex/ST-000-canonical-baseline`; pushed in draft PR #2                                           |
 | Repository                    | [OmarA1-Bakri/StoryTime](https://github.com/OmarA1-Bakri/StoryTime)                                |
 | Linear project                | [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e) |
@@ -94,6 +94,8 @@ The `main` branch now requires the `workspace` status check on an up-to-date bra
 The live provider adapters now fail closed unless OpenAI ZDR, Groq ZDR, fal private-output, and fal media-retention attestations are exactly `true`. The central production capability registry enforces the same controls, and the web prebuild runs the production environment guard. These flags record verified account state; they do not configure a provider or replace the remaining legal, regional, deletion, synthetic-spike, and processor review. No real child data was sent.
 
 The focused `codex/ST-100-clerk-binding` branch is stacked on the canonical baseline in [draft PR #3](https://github.com/OmarA1-Bakri/StoryTime/pull/3). It adds verified-subject adult bootstrap, signed Clerk lifecycle synchronization, replay and restrictive-ordering policy, a private allowlisted Convex service boundary, and focused regression tests. Its full local `pnpm check` passed, but the package remains in review because Clerk and Convex are not linked, generated Convex types and deployed ingress were not exercised, and broader caller-selected actor IDs remain ST-102/ST-108 work.
+
+The dependent `codex/ST-101-family-tenancy` branch is stacked in [draft PR #4](https://github.com/OmarA1-Bakri/StoryTime/pull/4). It adds the versioned owner-only family tenant primitive, trusted region/config readiness, and an additive cursor-bounded legacy-profile bridge with an explicit rollback path. Its final local `pnpm check` passed after independent review. It remains in review because `CONVEX_DEPLOYMENT` is unset, code generation and deployed migration/index/concurrency evidence are absent, and membership/RBAC, full cross-family negatives, ownership transfer, and erasure remain ST-102/ST-108/ST-600 work.
 
 ### Remaining recovery action
 
