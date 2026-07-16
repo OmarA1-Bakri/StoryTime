@@ -1,10 +1,11 @@
-# StoryTime Infrastructure
+# StoryTime Local Infrastructure
 
 Local services:
 
-- Redis for LiveKit coordination and future queues.
 - LiveKit for realtime audio/video development.
-- MinIO for local S3-compatible storage.
+- MinIO for local S3-compatible private media storage.
+- Redis only where the local LiveKit configuration needs it or a measured
+  future use is approved. Convex job tables are the canonical beta queue.
 
 Start local infrastructure:
 
@@ -12,4 +13,8 @@ Start local infrastructure:
 bash infra/scripts/setup-local.sh
 ```
 
-No production credentials belong in this repository.
+Use synthetic media locally. No production credential or family content
+belongs in this repository.
+
+Production topology and environment isolation are defined in
+[../docs/architecture.md](../docs/architecture.md).

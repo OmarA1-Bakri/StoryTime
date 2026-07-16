@@ -1,12 +1,73 @@
-# Decision Log
+# StoryTime Decision Log
 
-## 2026-06-28 — Phase 0 setup only
+No owner approval was recorded during this synthesis. `Source-derived` means the decision follows the supplied evidence; it is not a substitute for owner/legal approval. `Provisional` is the autonomous implementation default until its named approver closes it.
 
-Decision: create the operating system before implementation.
+| ID        | Date       | Status         | Decision                                                                                                                                                 | Authority / approver                                                |
+| --------- | ---------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `ADR-001` | 2026-06-28 | Superseded     | Phase-0-only setup before product implementation                                                                                                         | Historical repo decision; superseded by v1 source pack              |
+| `ADR-002` | 2026-07-16 | Source-derived | Product spelling is `StoryTime`; `StoriTime` is a legacy typo                                                                                            | PRD, blueprint, repository; owner may override brand                |
+| `ADR-003` | 2026-07-16 | Source-derived | Atomic value unit is one safe, recorded, privately replayable chapter                                                                                    | All supplied product/media sources                                  |
+| `ADR-004` | 2026-07-16 | Provisional    | Mobile is canonical for child handoff; full public/adult web and desktop adult participation are in scope                                                | User request extends mobile sources; owner approval pending         |
+| `ADR-005` | 2026-07-16 | Source-derived | Adult lobby is unrecorded; recording/AI child-media authority begins only after consent, adult acceptances, and handoff                                  | PRD/blueprint consent gates                                         |
+| `ADR-006` | 2026-07-16 | Source-derived | Live audio may remain open, but STT/LLM receives only the submitted baton interval                                                                       | PRD, blueprint, audio/video analyses                                |
+| `ADR-007` | 2026-07-16 | Source-derived | Record separate LiveKit participant tracks and ordered events; compose replay asynchronously with FFmpeg                                                 | Blueprint and state-machine video                                   |
+| `ADR-008` | 2026-07-16 | Source-derived | Prototype recorder is an output-layout reference, not live RoomComposite architecture                                                                    | Blueprint/prototype conflict resolution                             |
+| `ADR-009` | 2026-07-16 | Provisional    | Convex is authoritative control plane and initial durable job queue; no required production Redis queue for beta                                         | Architecture synthesis; engineering owner pending spike             |
+| `ADR-010` | 2026-07-16 | Provisional    | One containerized worker service initially handles typed AI/media/deletion jobs with separate concurrency                                                | Architecture synthesis; engineering owner pending load spike        |
+| `ADR-011` | 2026-07-16 | Provisional    | Private R2-compatible storage holds media; an authorization gateway serves every client range/segment without origin URLs                                | Privacy design; security/engineering owner pending spike            |
+| `ADR-012` | 2026-07-16 | Provisional    | Clerk authenticates adults; versioned VPC is a separate provider-backed workflow                                                                         | Existing branch plus privacy requirement; owner/legal pending       |
+| `ADR-013` | 2026-07-16 | Source-derived | AI output is structured, safety-gated before publication, and has an approved deterministic fallback                                                     | PRD/blueprint/media sources                                         |
+| `ADR-014` | 2026-07-16 | Source-derived | Family media is never used for first-party or provider model training                                                                                    | Product/privacy source invariant                                    |
+| `ADR-015` | 2026-07-16 | Provisional    | Event ledger is append-only while retained but deleted with chapter content; only content-free audit evidence survives                                   | Source conflict resolution; legal/privacy owner pending             |
+| `ADR-016` | 2026-07-16 | Provisional    | Basic private Vault is core; paid media archive/remaster is separate from free privacy-rights access                                                     | Product hypothesis; owner/legal approval pending                    |
+| `ADR-017` | 2026-07-16 | Source-derived | Audio-first degradation/reconnect is required reliability, but low-bandwidth market support is not promised                                              | Prototype/blueprint conflict resolution                             |
+| `ADR-018` | 2026-07-16 | Provisional    | Default beta replay is private 1280×720 H.264/AAC MP4 with captions and verified sync                                                                    | Media engineering default; owner/accessibility approval pending     |
+| `ADR-019` | 2026-07-16 | Provisional    | Raw tracks default to seven days after verified replay and up to 30 days for recoverable failure                                                         | Conservative engineering default; legal/privacy owner pending       |
+| `ADR-020` | 2026-07-16 | Provisional    | Web/mobile share contracts, state machines, safety, and tokens, not entire screen implementations                                                        | Engineering synthesis; owner pending implementation spike           |
+| `ADR-021` | 2026-07-16 | Source-derived | Preserve and review `agent/live-foundation`; do not discard or assume merged                                                                             | Verified Git branch evidence                                        |
+| `ADR-022` | 2026-07-16 | Provisional    | Build vertically to one synthetic chapter before broad UI polish                                                                                         | Delivery strategy; product/engineering owner pending                |
+| `ADR-023` | 2026-07-16 | Provisional    | Real under-13 AI processing is capability-gated on approved zero-retention/private-output controls; no-training and `store:false` alone are insufficient | Current primary provider policies; legal/privacy owner must approve |
+| `ADR-024` | 2026-07-16 | Provisional    | Nearby supervisor and child use distinct sequential participant identities; chapter egress starts after committed handoff and uses segment manifests     | Consent/media design; LiveKit spike and owner approval pending      |
+| `ADR-025` | 2026-07-16 | Provisional    | Standard WebRTC transport encryption is the recorded beta baseline; no E2EE claim without a proven recording key path                                    | LiveKit architecture constraint; security/legal owner pending       |
 
-Rationale:
-- Avoid implementing from assumptions before PRD ingestion.
-- Establish GitHub, Linear, Mem0, scaffold, docs, and hard gates first.
-- Keep all secrets out of source control.
+## ADR-001 — Setup-only phase
 
-Status: accepted.
+The original decision prevented speculative implementation before the source documents were available. It is superseded because the PRD, blueprint, prototype, media, repository, and backlog have now been reconciled into the canonical v1 pack.
+
+## Pending owner/pre-production decisions
+
+These do not block configurable implementation or synthetic testing, but they block public processing of real child data or commercial release:
+
+| ID        | Decision required                                                                                                        |
+| --------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `DEC-P01` | Initial public launch jurisdiction(s), controller/legal entity, and approved legal review                                |
+| `DEC-P02` | Production verifiable parental-consent provider, method, scopes, expiry, and dispute process                             |
+| `DEC-P03` | Final processor contracts/configuration for child data, ZDR/private output, deletion, retention, region, and no-training |
+| `DEC-P04` | Final retention, backup, export, and audit schedule                                                                      |
+| `DEC-P05` | Apple/Google app category, age rating, privacy/data disclosures, and account access                                      |
+| `DEC-P06` | Subscription catalogue, prices, trials, refunds, taxes, and paid retention                                               |
+| `DEC-P07` | Support/privacy contact and incident owner                                                                               |
+| `DEC-P08` | Adult eligibility/age assurance, guardian authority evidence, custody/dispute policy, and approved-adult limits          |
+| `DEC-P09` | Age-appropriate child notice, assent/stop/help controls, and what happens when a child wants recording to stop           |
+| `DEC-P10` | Safety incident disclosure/escalation, content review authority, mandatory-reporting analysis, and family notice         |
+| `DEC-P11` | Necessity and final retention of raw child audio/video after verified replay                                             |
+
+## Decision protocol
+
+A material decision entry records:
+
+- context and evidence;
+- decision and status;
+- alternatives rejected;
+- product/security/privacy consequences;
+- migration/rollback;
+- owner and date.
+
+Statuses:
+
+- `Provisional`: implementation may proceed with synthetic data behind configuration; named approval is pending.
+- `Source-derived`: directly reconciled from supplied evidence; still not an owner/legal approval.
+- `Accepted`: explicit owner/required reviewer approval is recorded with date and evidence.
+- `Superseded`: replaced by a later decision with migration/rollback notes.
+
+Owner approval is required to change child access, consent/recording boundary, family role authority, deletion semantics, safety policy, public sharing, data use/training, launch jurisdiction, or commercial commitment.
