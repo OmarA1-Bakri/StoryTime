@@ -1,15 +1,11 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-import { requireGrant } from "./guards";
-import { assert } from "./lib/errors";
-import { now } from "./lib/time";
-
-const memberRole = v.union(v.literal("co_parent"), v.literal("grandparent"), v.literal("guardian"));
+import { requireAuthenticatedUser, requireProfileCapability } from "./guards";
 
 export const listMembers = query({
-  args: { profileId: v.id("profiles"), requesterUserId: v.id("users") },
+  args: { profileId: v.id("profiles") },
   handler: async (ctx, args) => {
-    await requireGrant(ctx, args.requesterUserId, args.profileId);
+    await requireProfileCapability(ctx, args.profileId, "profiles:view");
     return await ctx.db
       .query("accessGrants")
       .withIndex("by_profile", (q) => q.eq("profileId", args.profileId))
@@ -20,57 +16,22 @@ export const listMembers = query({
 export const addMember = mutation({
   args: {
     profileId: v.id("profiles"),
-    requesterUserId: v.id("users"),
     memberUserId: v.id("users"),
-    role: memberRole,
+    role: v.literal("approved_adult"),
   },
-  handler: async (ctx, args) => {
-    const requester = await requireGrant(ctx, args.requesterUserId, args.profileId);
-    assert(requester.role === "owner", "owner_required", "Owner role required");
-    const existing = await ctx.db
-      .query("accessGrants")
-      .withIndex("by_profile_adult", (q) =>
-        q.eq("profileId", args.profileId).eq("adultUserId", args.memberUserId),
-      )
-      .unique();
-    if (existing) {
-      await ctx.db.patch(existing._id, { role: args.role, status: "active", updatedAt: now() });
-      return existing._id;
-    }
-    return await ctx.db.insert("accessGrants", {
-      profileId: args.profileId,
-      adultUserId: args.memberUserId,
-      role: args.role,
-      status: "active",
-      invitedBy: args.requesterUserId,
-      createdAt: now(),
-      updatedAt: now(),
-    });
+  handler: async (ctx) => {
+    await requireAuthenticatedUser(ctx);
+    throw new Error("membership_lifecycle_not_implemented");
   },
 });
 
 export const removeMember = mutation({
   args: {
     profileId: v.id("profiles"),
-    requesterUserId: v.id("users"),
     memberUserId: v.id("users"),
   },
-  handler: async (ctx, args) => {
-    const requester = await requireGrant(ctx, args.requesterUserId, args.profileId);
-    assert(requester.role === "owner", "owner_required", "Owner role required");
-    assert(
-      args.requesterUserId !== args.memberUserId,
-      "self_remove_blocked",
-      "Owner cannot remove their own member record",
-    );
-    const existing = await ctx.db
-      .query("accessGrants")
-      .withIndex("by_profile_adult", (q) =>
-        q.eq("profileId", args.profileId).eq("adultUserId", args.memberUserId),
-      )
-      .unique();
-    assert(existing, "member_missing", "Member grant not found");
-    await ctx.db.patch(existing._id, { status: "revoked", updatedAt: now() });
-    return existing._id;
+  handler: async (ctx) => {
+    await requireAuthenticatedUser(ctx);
+    throw new Error("membership_lifecycle_not_implemented");
   },
 });

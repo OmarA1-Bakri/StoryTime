@@ -71,7 +71,10 @@ export const getMine = query({
     const family = await ctx.db.get(args.familyId);
     if (!family || family.ownerUserId !== owner._id || family.status !== "active") return null;
     familyTenantMetadataSchema.parse(family);
-    return family;
+    return {
+      familyId: family._id,
+      status: family.status,
+    };
   },
 });
 

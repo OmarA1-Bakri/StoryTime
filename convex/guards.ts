@@ -1,11 +1,12 @@
 import {
   authorizeFamilyCapability,
+  FAMILY_TENANT_MIGRATION_VERSION,
   familyMemberPolicyMetadataSchema,
   familyProfileAssignmentMetadataSchema,
   familyTenantMetadataSchema,
 } from "@storytime/validators";
 import type { FamilyCapability } from "@storytime/validators";
-import type { Id } from "./_generated/dataModel";
+import type { Doc, Id } from "./_generated/dataModel";
 import type { MutationCtx, QueryCtx } from "./_generated/server";
 import { assert } from "./lib/errors";
 import { requireCanonicalOwnerMembership } from "./lib/familyMembership";
@@ -15,20 +16,8 @@ type FamilyCapabilityOptions = {
   recentAuthenticationVerified?: boolean;
   consentVerified?: boolean;
   entitlementVerified?: boolean;
+  authenticatedUser?: Doc<"users">;
 };
-
-export async function requireGrant(
-  ctx: QueryCtx | MutationCtx,
-  userId: Id<"users">,
-  profileId: Id<"profiles">,
-) {
-  const grant = await ctx.db
-    .query("accessGrants")
-    .withIndex("by_profile_adult", (q) => q.eq("profileId", profileId).eq("adultUserId", userId))
-    .unique();
-  assert(grant && grant.status === "active", "grant_missing", "Required grant is missing");
-  return grant;
-}
 
 export async function requireAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
   const identity = await ctx.auth.getUserIdentity();
@@ -54,7 +43,7 @@ export async function requireFamilyCapability(
   capability: FamilyCapability,
   options: FamilyCapabilityOptions = {},
 ) {
-  const user = await requireAuthenticatedUser(ctx);
+  const user = options.authenticatedUser ?? (await requireAuthenticatedUser(ctx));
   const family = await ctx.db.get(familyId);
   assert(family && family.status === "active", "family_missing", "Active family is missing");
   familyTenantMetadataSchema.parse(family);
@@ -118,17 +107,27 @@ export async function requireFamilyCapability(
   return { family, member: storedMembership };
 }
 
-export async function hasVerifiedRecord(
+export async function requireProfileCapability(
   ctx: QueryCtx | MutationCtx,
-  userId: Id<"users">,
   profileId: Id<"profiles">,
+  capability: FamilyCapability,
+  gates: FamilyCapabilityOptions = {},
 ) {
-  const records = await ctx.db
-    .query("consentRecords")
-    .withIndex("by_user", (q) => q.eq("userId", userId))
-    .collect();
-  return records.some(
-    (record) =>
-      record.status === "verified" && (!record.profileId || record.profileId === profileId),
+  const user = await requireAuthenticatedUser(ctx);
+  const profile = await ctx.db.get(profileId);
+  assert(
+    profile &&
+      profile.status === "active" &&
+      profile.familyId &&
+      profile.tenantMigrationVersion === FAMILY_TENANT_MIGRATION_VERSION,
+    "profile_unavailable",
+    "Profile is unavailable or has not completed tenant migration",
   );
+  const authorization = await requireFamilyCapability(ctx, profile.familyId, capability, {
+    ...gates,
+    consentVerified: gates.consentVerified,
+    profileId,
+    authenticatedUser: user,
+  });
+  return { user, profile, ...authorization };
 }
