@@ -121,6 +121,8 @@ This is Phase 0 local engineering evidence, not proof of a working chapter or re
 
 The repository is linked to Vercel project `storytime` under `omar-proj-canonical`, with `apps/web` as the project root and Node 22. The inherited project commands incorrectly used npm and caused prior deployments to fail. The project now uses the pinned pnpm workspace install and filtered web build. Preview deployment [`dpl_2U9tJj5kaRdsC7KMS6xfKuMasZUc`](https://vercel.com/omar-proj-canonical/storytime/2U9tJj5kaRdsC7KMS6xfKuMasZUc) completed successfully at [storytime-jxq3q7yug-omar-proj-canonical.vercel.app](https://storytime-jxq3q7yug-omar-proj-canonical.vercel.app). No production deployment or alias was changed.
 
+The current no-secret deployment, provider, monitoring, billing, and native-account findings are recorded in [capability-inventory.md](capability-inventory.md). Convex and Cloudflare connector records exist but their API authentication is unusable; Sentry is readable but contains no StoryTime project; PostHog project discovery is unusable; LiveKit/R2/Clerk/Groq/fal/EAS/store/consent/billing production paths remain unconfigured or decision-gated.
+
 ## 5. Phase 0 spike evidence
 
 `ST-012` has a repeatable local synthetic composition spike. It creates two checksum-distinct H.264/AAC tracks, applies a two-event ordered ledger, emits a six-second 1280×720 H.264/AAC replay, verifies it with ffprobe, repeats the encode, and removes all scratch data.
@@ -195,7 +197,7 @@ The v1 PRD resolves their conflicting spelling, web scope, consent ordering, low
 ## 9. Immediate critical path
 
 1. Complete review of integration PR #2 and merge only after required protection/review evidence.
-2. Complete the remaining deployment/account/provider capability inventory; keep the reconciled Linear tracker synchronized at package boundaries.
+2. Reauthorize or configure the account capabilities identified in the completed inventory as their dependent packages become ready; keep Linear synchronized at package boundaries.
 3. Measure the blocked synthetic LiveKit and full AI-turn spikes; preserve the completed composition evidence.
 4. Migrate identity/family/consent/state models before production data.
 5. Prove the two-adult, unrecorded-lobby, handoff, and recording boundary.

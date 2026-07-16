@@ -21,6 +21,7 @@ Read in order:
 11. [docs/decision-log.md](docs/decision-log.md) — decisions and pending approvals
 12. [docs/source-register.md](docs/source-register.md) — reconciled source evidence
 13. [docs/autonomous-build-prompt.md](docs/autonomous-build-prompt.md) — full-build kickoff prompt
+14. [docs/capability-inventory.md](docs/capability-inventory.md) — current connected-account and external-gate inventory
 
 Historical PDFs, prototypes, previous stub documents, and legacy Linear tickets are supporting evidence only when they conflict with this pack.
 
@@ -153,5 +154,5 @@ Do not weaken these constraints to make a demo easier.
 ## Links
 
 - [GitHub repository](https://github.com/OmarA1-Bakri/StoryTime)
-- [Linear project](https://linear.app/leadscout/project/storitime-mvp-build-11d86b03b18e)
-- Repository homepage metadata: [storytime-roan.vercel.app](https://storytime-roan.vercel.app) — verify the actual deployment before treating it as current
+- [Linear project](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e)
+- Verified preview: [storytime-jxq3q7yug-omar-proj-canonical.vercel.app](https://storytime-jxq3q7yug-omar-proj-canonical.vercel.app) — this is not a production-launch claim
