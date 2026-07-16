@@ -7,11 +7,11 @@
   },
   "scripts": {
     "dev": "next dev",
-    "lint": "next lint || eslint .",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run",
-    "test:e2e": "echo \"No web e2e tests yet\"",
+    "test:e2e": "playwright test",
     "build": "next build"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.61.1",
     "@types/node": "^22.0.0",
     "@types/react": "~19.0.10",
     "@types/react-dom": "~19.0.4",

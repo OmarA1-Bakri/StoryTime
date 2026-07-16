@@ -1,0 +1,14 @@
+appId: ${MAESTRO_APP_ID}
+name: Launch reaches the adult authentication gate
+---
+- launchApp:
+    clearState: true
+    stopApp: true
+- assertVisible: "StoryTime"
+- assertVisible: "Private story calls for families apart."
+- tapOn: "Begin adult setup"
+- assertVisible: "Adult sign in"
+- assertVisible: "Create a protected family space."
+- assertVisible: "Only authenticated adults can manage child profiles, trusted family access, recording, replay and deletion."
+- assertNotVisible: "Protected gate"
+- assertNotVisible: "Adult dashboard"

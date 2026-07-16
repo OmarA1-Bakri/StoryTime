@@ -29,10 +29,20 @@ No owner approval was recorded during this synthesis. `Source-derived` means the
 | `ADR-023` | 2026-07-16 | Provisional    | Real under-13 AI processing is capability-gated on approved zero-retention/private-output controls; no-training and `store:false` alone are insufficient | Current primary provider policies; legal/privacy owner must approve |
 | `ADR-024` | 2026-07-16 | Provisional    | Nearby supervisor and child use distinct sequential participant identities; chapter egress starts after committed handoff and uses segment manifests     | Consent/media design; LiveKit spike and owner approval pending      |
 | `ADR-025` | 2026-07-16 | Provisional    | Standard WebRTC transport encryption is the recorded beta baseline; no E2EE claim without a proven recording key path                                    | LiveKit architecture constraint; security/legal owner pending       |
+| `ADR-026` | 2026-07-16 | Source-derived | Reconstruct the unavailable packaged baseline as a local commit on `main`, then merge `agent/live-foundation` without dropping its three commits         | Package/remote Git evidence; autonomous delivery contract           |
+| `ADR-027` | 2026-07-16 | Provisional    | Keep the reproducible merge gate separate from physical-device Maestro evidence; combine both only in the release gate                                   | CI truthfulness and current device/tool availability                |
 
 ## ADR-001 — Setup-only phase
 
 The original decision prevented speculative implementation before the source documents were available. It is superseded because the PRD, blueprint, prototype, media, repository, and backlog have now been reconciled into the canonical v1 pack.
+
+## ADR-026 — Packaged baseline recovery
+
+The installation bundle identifies commit `61ad4f3`, but that object is not reachable from the canonical remote. The extracted application files match remote `main` while the canonical documents and registered source artifacts are additional local content. The recovery path therefore commits the supplied bundle on top of `main` and merges `origin/agent/live-foundation`, resolving documentation conflicts in favor of the newer canonical pack while preserving all Clerk, LiveKit, provider, and lockfile work. This avoids inventing an unavailable commit or replacing either evidence set. Rollback is a normal revert of the local baseline and merge commits; no remote history is rewritten.
+
+## ADR-027 — Merge and physical-device gates
+
+`pnpm check` is the clean-checkout merge gate and includes format, lint, types, unit/integration, Chromium E2E, AI/media fixtures, Next production compilation, and Android/iOS Expo bundle export. `pnpm check:device` is a real Maestro runner that fails when Maestro, a booted target, or the installed application is unavailable. `pnpm check:release` combines both. Making an unavailable physical-device runner part of every generic CI job would keep CI permanently red; silently skipping it would create false evidence. The separate release gate preserves the failure while allowing deterministic source integration. A device-backed CI or release runner can replace this provisional split without changing the Maestro flows.
 
 ## Pending owner/pre-production decisions
 

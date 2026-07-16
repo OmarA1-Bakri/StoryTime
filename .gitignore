@@ -6,6 +6,7 @@ build/
 .expo/
 .turbo/
 coverage/
+/output/playwright/
 .env
 .env.*
 !.env.example

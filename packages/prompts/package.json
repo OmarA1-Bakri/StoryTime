@@ -7,9 +7,8 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"No prompts tests yet\"",
-    "test:unit": "echo \"No prompts unit tests yet\"",
-    "test:e2e": "echo \"No prompts e2e tests yet\"",
+    "test": "vitest run",
+    "test:unit": "vitest run",
     "build": "tsc --noEmit"
   },
   "devDependencies": {

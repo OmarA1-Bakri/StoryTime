@@ -6,7 +6,7 @@
 | Default branch                | `main`                                                                                       |
 | Default-branch commit audited | `6b57b46057b10f90a8ca40d06c3bed28c8c3ae2b`                                                   |
 | Newest implementation branch  | `origin/agent/live-foundation` at `c343667`                                                  |
-| Canonical-doc work branch     | Local `docs/canonical-product-build-plan`; not pushed or opened as a PR                      |
+| Canonical-doc work branch     | Local `codex/ST-000-canonical-baseline`; integration merge `a6c4e4c`; not yet pushed         |
 | Repository                    | [OmarA1-Bakri/StoryTime](https://github.com/OmarA1-Bakri/StoryTime)                          |
 | Linear project                | [StoriTime MVP Build](https://linear.app/leadscout/project/storitime-mvp-build-11d86b03b18e) |
 
@@ -85,7 +85,9 @@ It changes 62 files and adds:
 - fal image adapter;
 - capability tests and safer live-mode refusal.
 
-There is no open GitHub PR for this branch and the connected GitHub status endpoints returned no CI/check status for either audited head. The branch must be reviewed and tested; it must not be blindly discarded or treated as merged.
+[Draft PR #1](https://github.com/OmarA1-Bakri/StoryTime/pull/1) is open from `agent/live-foundation` to `main`, mergeable, and has a passing GitHub Actions run but no review. That CI uses a non-frozen install, a mutating format command, placeholder mobile/web/worker test gates, and a typecheck-only worker build, so it is not Phase 0 or release evidence. The branch must be reviewed and tested; it must not be blindly discarded or treated as merged.
+
+The local `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pack and merges all three `agent/live-foundation` commits. It remains local pending truthful Phase 0 gates and normal PR review; no remote branch history has been rewritten.
 
 The live provider adapters also predate this pack's verified under-13 controls. Before they receive real child data, review and test OpenAI ZDR capability, Groq ZDR/private clip delivery, fal no-store/private ACL and URL handling, plus the deletion/retention path. Existing adapter code or `store: false` alone is not readiness evidence.
 
@@ -101,20 +103,19 @@ The live provider adapters also predate this pack's verified under-13 controls. 
 
 ## 4. Build and tooling state
 
-Repository intent:
+The local integration branch now has a reproducible non-device merge gate:
 
-- Node `22.x`;
-- pnpm `9.15.9`;
-- current shell at audit time used Node 24 and global pnpm 11;
-- `main` had no `pnpm-lock.yaml`;
-- the live-foundation branch adds the lockfile.
+- Node `22.23.1`, Corepack, and pnpm `9.15.9` were selected explicitly;
+- `pnpm install --frozen-lockfile` passed from the reviewed lockfile;
+- `pnpm check` passed formatting, lint across eight packages, typechecking, real unit and integration suites, three Chromium Playwright checks, AI/media suites, Next production compilation, and capped Android/iOS Expo exports;
+- Turbo build output contracts distinguish generated web/mobile artifacts from intentional typecheck-only package builds;
+- generated `.next`, Expo, Turbo, OMX, codebase-memory, build, coverage, and distribution state is excluded from source formatting/lint discovery;
+- the web unit runner excludes Playwright-owned specs, and the root ESLint configuration resolves the Next core-web-vitals rules;
+- mobile bundles use two Metro workers and root builds are serialized to stay below the verified Windows memory ceiling.
 
-Consequences:
+The physical-device gate is deliberately separate. `pnpm check:device` executes a real Maestro contract and currently fails closed because this machine has no Maestro CLI, booted device, or installed native app. `pnpm check:release` combines the merge gate and that device gate. CI runs `pnpm check`; it does not claim physical-device coverage.
 
-- CI/local reproducibility is not established on `main`.
-- Any meaningful test result must use Node 22, Corepack, pinned pnpm, and a frozen lock.
-- Existing mobile `test` and `build` scripts on `main` are placeholder `echo` commands and cannot count as gates.
-- Existing web/worker tests are useful but exercise demo/mock slices, not the real chapter.
+This is Phase 0 local engineering evidence, not proof of a working chapter or release. Existing web/worker tests still exercise demo, policy, provider-fixture, and media-plan slices rather than the complete production vertical.
 
 The repository homepage points to a Vercel URL, but this audit did not treat repository metadata as deployment verification.
 
@@ -187,13 +188,13 @@ The v1 PRD resolves their conflicting spelling, web scope, consent ordering, low
 
 ## 8. Immediate critical path
 
-1. Merge the canonical documents through normal review.
-2. Recover and review `agent/live-foundation`.
-3. Pin/install the toolchain and make `pnpm check` truthful.
+1. Commit and open the integration branch for normal review; do not merge without CI and branch review.
+2. Reconcile Linear and complete the deployment/account/provider capability inventory.
+3. Measure the synthetic LiveKit, AI-turn, and composition spikes required for Phase 0 estimates.
 4. Migrate identity/family/consent/state models before production data.
 5. Prove the two-adult, unrecorded-lobby, handoff, and recording boundary.
 6. Close processor ZDR/private-output and region gates using synthetic data.
-7. Complete one synthetic chapter vertically before broad UI polish.
+7. Complete one synthetic chapter vertically; the public/demo frontend polish is visual product work, not vertical acceptance evidence.
 
 ## 9. Completion estimate policy
 

@@ -7,12 +7,12 @@
     "dev": "expo start --dev-client",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"No mobile tests yet\"",
-    "test:unit": "echo \"No mobile unit tests yet\"",
-    "test:e2e": "echo \"No mobile e2e tests yet\"",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "node ./scripts/run-maestro.mjs",
     "build": "pnpm build:android && pnpm build:ios",
-    "build:android": "expo export --platform android --output-dir dist/android",
-    "build:ios": "expo export --platform ios --output-dir dist/ios"
+    "build:android": "expo export --platform android --output-dir dist/android --max-workers 2",
+    "build:ios": "expo export --platform ios --output-dir dist/ios --max-workers 2"
   },
   "dependencies": {
     "@clerk/expo": "^3.7.1",
