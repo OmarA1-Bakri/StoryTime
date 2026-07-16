@@ -89,6 +89,8 @@ It changes 62 files and adds:
 
 The `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pack and merges all three `agent/live-foundation` commits. [Draft PR #2](https://github.com/OmarA1-Bakri/StoryTime/pull/2) is pushed for normal review. Its `workspace` GitHub Actions check passed from a clean checkout. No remote branch history was rewritten and the PR remains unmerged.
 
+The `main` branch now requires the `workspace` status check on an up-to-date branch, one approving review, dismissal of stale reviews, and resolved conversations. Force-push and branch deletion are disabled. GitHub secret scanning and push protection are enabled; the alerts API reports zero open alerts. Admin bypass remains available for repository recovery, but the normal merge path is protected.
+
 The live provider adapters also predate this pack's verified under-13 controls. Before they receive real child data, review and test OpenAI ZDR capability, Groq ZDR/private clip delivery, fal no-store/private ACL and URL handling, plus the deletion/retention path. Existing adapter code or `store: false` alone is not readiness evidence.
 
 ### Required recovery action
@@ -149,7 +151,7 @@ The connected Linear project was renamed from the legacy typo to [StoryTime MVP 
 
 - verified scaffold/setup foundations LEA-16–20 were closed without claiming production readiness;
 - obsolete LEA-22 and LEA-23 were canceled and LEA-54 was linked as a duplicate of LEA-52;
-- deployment/protection inventory LEA-21, LEA-24, and LEA-25 were moved to `Todo` with current gaps;
+- deployment inventory LEA-21 and LEA-24 were moved to `Todo` with current gaps; LEA-25 was completed after branch protection, secret scanning, and push protection were enabled;
 - truthful merge-gate work LEA-41 was moved to `In Review` with PR #2 and CI evidence;
 - partially implemented auth, consent, LiveKit, domain, AI, and storage tickets were moved to `In Progress` with explicit missing acceptance criteria;
 - [LEA-105](https://linear.app/leadscout/issue/LEA-105/st-007-reconcile-legacy-linear-backlog-with-canonical-plan) tracks completion of the remaining canonical phase/package mapping.
