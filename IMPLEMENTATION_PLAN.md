@@ -44,7 +44,7 @@ A static demo, mock provider, placeholder script, web-only flow, typecheck-only 
 
 Only `DONE_VERIFIED` counts toward phase completion.
 
-Initial registry state was superseded by the live evidence in [docs/current-state.md](docs/current-state.md). As of 2026-07-16, the integration branch and draft PR #2 put `ST-000` and `ST-002` in review; the reproducible workspace, truthful checks, and CI provide evidence for `ST-003`–`ST-005`; `ST-007` and `ST-009` are in progress; and the measured synthetic compositor provides `ST-012` evidence. Unmerged work and partial Linear status do not count as phase completion.
+Initial registry state was superseded by the live evidence in [docs/current-state.md](docs/current-state.md). As of 2026-07-16, the integration branch and draft PR #2 put `ST-000` and `ST-002` in review; the reproducible workspace, truthful checks, and CI provide evidence for `ST-003`–`ST-005`; all 60 legacy issues and canonical milestones are reconciled for `ST-007`; `ST-009` is in progress; and the measured synthetic compositor provides `ST-012` evidence. Unmerged work and partial Linear status do not count as phase completion.
 
 Scheduling is deterministic: select the lowest numbered phase whose exit is incomplete, then the first `NOT_STARTED` package in that phase whose earlier required rows and explicit dependencies are `DONE_VERIFIED`. Work explicitly listed as safe parallelism may start concurrently; security/privacy blockers outrank numeric order.
 

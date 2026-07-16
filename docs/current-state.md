@@ -147,25 +147,24 @@ Those claims were materially stale. The canonical v1 documents replace them.
 
 ## 7. Linear state
 
-The connected Linear project was renamed from the legacy typo to [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e), assigned an owner, and moved to `In Progress`. The initial reconciliation compared all 60 legacy issues with code and then updated the evidence-backed setup and partially implemented slices:
+The connected Linear project was renamed from the legacy typo to [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e), assigned an owner, and moved to `In Progress`. `ST-007` compared all 60 legacy issues with code, replaced the eleven legacy milestones with canonical Phases 0–9 plus one explicit legacy marker, and updated every legacy issue:
 
 - verified scaffold/setup foundations LEA-16–20 were closed without claiming production readiness;
 - obsolete LEA-22 and LEA-23 were canceled and LEA-54 was linked as a duplicate of LEA-52;
 - deployment inventory LEA-21 and LEA-24 were moved to `Todo` with current gaps; LEA-25 was completed after branch protection, secret scanning, and push protection were enabled;
 - truthful merge-gate work LEA-41 was moved to `In Review` with PR #2 and CI evidence;
 - partially implemented auth, consent, LiveKit, domain, AI, and storage tickets were moved to `In Progress` with explicit missing acceptance criteria;
-- [LEA-105](https://linear.app/leadscout/issue/LEA-105/st-007-reconcile-legacy-linear-backlog-with-canonical-plan) tracks completion of the remaining canonical phase/package mapping.
+- [LEA-105](https://linear.app/leadscout/issue/LEA-105/st-007-reconcile-legacy-linear-backlog-with-canonical-plan) records the completed reconciliation and canonical phase/package mapping.
 
-The remaining legacy parent/phase issues and missing v1 package tickets still require reconciliation before `ST-007` is complete.
+The resulting 60-issue legacy inventory has 12 `Done`, 28 `In Progress`, 5 `Todo`, 12 `Canceled`, 2 `Duplicate`, and 1 `In Review`; none remain in `Backlog`. These states describe the legacy slices and do not override the ST package proof requirements.
 
-### Required backlog action
+### Ongoing tracker rules
 
-- Do not continue by simply taking the next numbered ticket.
-- Reconcile each issue against merged code and the v1 PRD.
-- Close/update obsolete scaffold tickets with commit/PR evidence.
-- Split partially implemented tickets.
-- Add missing v1 epics for family tenancy, web parity, native call delivery, safety evals, egress/composition, deletion, app-store release, and beta.
-- Use the phase/work-package IDs in [../IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) as the new ordering.
+- Select work in canonical dependency order, not legacy issue-number order.
+- Keep partial foundation tickets below `Done` until their named ST acceptance evidence exists.
+- Create focused canonical issues as packages become ready rather than reviving superseded phase parents.
+- Link commit, PR, CI, deployment, migration/rollback, and test evidence at each package boundary.
+- Use the phase/work-package IDs in [../IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) as the ordering authority.
 
 ## 8. Source-material findings
 
@@ -196,7 +195,7 @@ The v1 PRD resolves their conflicting spelling, web scope, consent ordering, low
 ## 9. Immediate critical path
 
 1. Complete review of integration PR #2 and merge only after required protection/review evidence.
-2. Finish the remaining Linear phase/package mapping and deployment/account/provider capability inventory.
+2. Complete the remaining deployment/account/provider capability inventory; keep the reconciled Linear tracker synchronized at package boundaries.
 3. Measure the blocked synthetic LiveKit and full AI-turn spikes; preserve the completed composition evidence.
 4. Migrate identity/family/consent/state models before production data.
 5. Prove the two-adult, unrecorded-lobby, handoff, and recording boundary.
