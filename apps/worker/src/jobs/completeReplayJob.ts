@@ -10,7 +10,7 @@ export async function completeReplayJob(input: CompleteReplayJobInput) {
   const output = await processTrackOutputJob(input);
   return {
     sessionId: input.sessionId,
-    status: output.ready ? "ready" as const : "waiting" as const,
-    outputKey: output.ready ? output.plan.outputKey : undefined
+    status: output.ready ? ("ready" as const) : ("waiting" as const),
+    outputKey: output.ready ? output.plan.outputKey : undefined,
   };
 }

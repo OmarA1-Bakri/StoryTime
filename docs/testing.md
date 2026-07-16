@@ -1,14 +1,7 @@
 # Testing
 
-Status: placeholder.
+The canonical test and release-evidence specification is [acceptance-test-plan.md](acceptance-test-plan.md).
 
-## Baseline gates
+The root target is `corepack pnpm check`, backed by real format, lint, type, unit, integration, web/mobile E2E, AI, media, security, and build gates as the implementation phases add them.
 
-- `pnpm format:check`
-- `pnpm lint`
-- `pnpm typecheck`
-- `pnpm test`
-- `pnpm build`
-- `pnpm check`
-
-Detailed unit, integration, media reliability, AI safety, privacy, consent, and replay-composition tests will be derived from the PRD.
+Placeholder `echo` scripts are not tests and cannot satisfy a merge or release gate.

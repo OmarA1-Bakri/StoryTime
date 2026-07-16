@@ -1,7 +1,7 @@
 const tiers = [
   { name: "Free Beta", storage: "Small", credits: "Limited weekly", export: "In-app replay" },
   { name: "Family", storage: "Medium", credits: "Moderate", export: "MP4 download" },
-  { name: "Vault", storage: "Large", credits: "Higher", export: "Archive tools" }
+  { name: "Vault", storage: "Large", credits: "Higher", export: "Archive tools" },
 ];
 
 export default function PricingPage() {
@@ -12,7 +12,8 @@ export default function PricingPage() {
       <ul>
         {tiers.map((tier) => (
           <li key={tier.name}>
-            <strong>{tier.name}</strong>: {tier.storage} storage, {tier.credits} credits, {tier.export}.
+            <strong>{tier.name}</strong>: {tier.storage} storage, {tier.credits} credits,{" "}
+            {tier.export}.
           </li>
         ))}
       </ul>

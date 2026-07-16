@@ -3,6 +3,8 @@ import { hasRemainingUnit } from "./planGate";
 
 describe("plan gate helpers", () => {
   it("accepts available units", () => {
-    expect(hasRemainingUnit({ active: true, remainingUnits: 1, usedBytes: 0, limitBytes: 100 })).toBe(true);
+    expect(
+      hasRemainingUnit({ active: true, remainingUnits: 1, usedBytes: 0, limitBytes: 100 }),
+    ).toBe(true);
   });
 });

@@ -7,7 +7,15 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", "build/**"]
+      "outputs": []
+    },
+    "@storytime/web#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "@storytime/mobile#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -18,7 +26,11 @@
     "test": {
       "dependsOn": ["^test"]
     },
-    "test:unit": {},
-    "test:e2e": {}
+    "test:unit": {
+      "dependsOn": ["^test:unit"]
+    },
+    "test:e2e": {
+      "cache": false
+    }
   }
 }

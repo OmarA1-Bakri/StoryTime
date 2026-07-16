@@ -9,8 +9,8 @@ describe("protected gate validator", () => {
         noticeVersion: "v0.1",
         acceptedRecordingNotice: true,
         acceptedAiProcessingNotice: true,
-        acceptedDeletionNotice: true
-      })
+        acceptedDeletionNotice: true,
+      }),
     ).toMatchObject({ adultUserId: "adult_1" });
   });
 
@@ -21,8 +21,8 @@ describe("protected gate validator", () => {
         noticeVersion: "v0.1",
         acceptedRecordingNotice: true,
         acceptedAiProcessingNotice: false,
-        acceptedDeletionNotice: true
-      })
+        acceptedDeletionNotice: true,
+      }),
     ).toThrow();
   });
 });

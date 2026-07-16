@@ -1,7 +1,8 @@
 export const appConfig = {
   appName: "StoryTime",
-  implementationLockedUntilRepoBootstrapPasses: true
+  implementationLockedUntilRepoBootstrapPasses: true,
 } as const;
 
 export * from "./providerMode";
 export * from "./productionGuard";
+export * from "./capabilities";

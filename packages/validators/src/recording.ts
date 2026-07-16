@@ -9,7 +9,7 @@ export const recordingStatusSchema = z.enum([
   "processing",
   "ready",
   "failed",
-  "deleted"
+  "deleted",
 ]);
 
 export const compositionEventSchema = z.object({
@@ -17,5 +17,5 @@ export const compositionEventSchema = z.object({
   eventType: z.string().min(1),
   timestampMs: z.number().nonnegative(),
   wallClockTime: z.number().nonnegative(),
-  payload: z.record(z.unknown())
+  payload: z.record(z.unknown()),
 });

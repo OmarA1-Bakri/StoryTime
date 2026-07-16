@@ -1,0 +1,25 @@
+appId: ${MAESTRO_APP_ID}
+name: Child and adult protected routes reject an unauthenticated direct entry
+---
+- launchApp:
+    clearState: true
+    stopApp: true
+- openLink: "storytime://call/handoff/maestro-synthetic"
+- runFlow:
+    when:
+      visible: "Open"
+    commands:
+      - tapOn: "Open"
+- assertVisible: "Adult sign in"
+- assertNotVisible: "Child-safe mode"
+- assertNotVisible: "Hand the phone to Rania"
+- openLink: "storytime://dashboard"
+- runFlow:
+    when:
+      visible: "Open"
+    commands:
+      - tapOn: "Open"
+- assertVisible: "Adult sign in"
+- assertVisible: "Create a protected family space."
+- assertNotVisible: "Adult dashboard"
+- assertNotVisible: "Your protected family space"

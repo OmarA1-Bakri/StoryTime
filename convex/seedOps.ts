@@ -3,7 +3,13 @@ import { v } from "convex/values";
 import { assert } from "./lib/errors";
 import { now } from "./lib/time";
 
-const seed = v.object({ character: v.string(), setting: v.string(), problem: v.string(), tone: v.string(), visualFormat: v.string() });
+const seed = v.object({
+  character: v.string(),
+  setting: v.string(),
+  problem: v.string(),
+  tone: v.string(),
+  visualFormat: v.string(),
+});
 
 export const lockSeed = mutation({
   args: { campaignId: v.id("campaigns"), storySeed: seed },
@@ -13,5 +19,5 @@ export const lockSeed = mutation({
     assert(!campaign.storySeed, "seed_already_locked", "Story seed is already locked");
     await ctx.db.patch(args.campaignId, { storySeed: args.storySeed, updatedAt: now() });
     return args.storySeed;
-  }
+  },
 });

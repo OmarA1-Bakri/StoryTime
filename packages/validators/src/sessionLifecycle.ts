@@ -26,7 +26,7 @@ const allowedTransitions: Record<SessionState, SessionState[]> = {
   paused: ["storytelling", "ending", "completed", "failed", "abandoned"],
   completed: [],
   failed: [],
-  abandoned: []
+  abandoned: [],
 };
 
 export function isSessionState(value: string): value is SessionState {

@@ -10,7 +10,7 @@ describe("runChapterPipeline", () => {
       noticeVersion: "v1",
       prompts: ["start", "continue"],
       trackKeys: ["audio.wav"],
-      timelineEventCount: 1
+      timelineEventCount: 1,
     });
 
     expect(result.status).toBe("ready");

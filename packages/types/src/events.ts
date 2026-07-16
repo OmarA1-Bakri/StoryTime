@@ -24,7 +24,7 @@ export const analyticsEvents = [
   "session_completed",
   "composition_ready",
   "story_replayed",
-  "deletion_completed"
+  "deletion_completed",
 ] as const;
 
 export type AnalyticsEventName = (typeof analyticsEvents)[number];

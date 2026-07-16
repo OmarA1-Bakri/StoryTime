@@ -7,7 +7,7 @@ export async function GET() {
     recording: true,
     scene: {
       title: "The moon-cheese rocket starts to glow",
-      caption: "The next story scene appears like a glowing page."
-    }
+      caption: "The next story scene appears like a glowing page.",
+    },
   });
 }

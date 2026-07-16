@@ -1,3 +1,5 @@
+import { summarizeReadiness } from "../../packages/config/src/capabilities";
+
 type AppEnv = "development" | "preview" | "production";
 
 const appEnv = (process.env.APP_ENV ?? "development") as AppEnv;
@@ -10,7 +12,7 @@ const requiredProductionVariables = [
   "R2_BUCKET_PRIVATE",
   "LIVEKIT_URL",
   "LIVEKIT_API_KEY",
-  "LIVEKIT_API_SECRET"
+  "LIVEKIT_API_SECRET",
 ];
 
 const mockProviderVariables = [
@@ -20,7 +22,7 @@ const mockProviderVariables = [
   "STORY_PROVIDER",
   "IMAGE_PROVIDER",
   "SAFETY_PROVIDER",
-  "BILLING_PROVIDER"
+  "BILLING_PROVIDER",
 ];
 
 function fail(message: string): never {
@@ -40,6 +42,16 @@ if (isProduction) {
 
   if (process.env.R2_PUBLIC_BASE_URL && process.env.R2_PUBLIC_BASE_URL.includes("public")) {
     fail("R2 public base URL must not imply public write access");
+  }
+
+  const readiness = summarizeReadiness(process.env);
+  if (!readiness.ready) {
+    const missing = readiness.capabilities
+      .filter((capability) => capability.state !== "live" && capability.name !== "billing")
+      .flatMap((capability) => capability.missingVariables)
+      .filter((name, index, variables) => variables.indexOf(name) === index);
+    const detail = missing.length > 0 ? `; missing or unverified: ${missing.join(", ")}` : "";
+    fail(`Production capabilities are not live: ${readiness.blockers.join(", ")}${detail}`);
   }
 }
 

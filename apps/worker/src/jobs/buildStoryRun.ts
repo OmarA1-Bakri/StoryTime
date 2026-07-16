@@ -18,6 +18,11 @@ export async function buildStoryRun(input: StoryRunInput) {
     sessionId: input.sessionId,
     steps,
     bundleKey: prepareBundle(input.sessionId),
-    usage: createUsageLogEntry({ userId: input.userId, type: "story_step", quantity: steps.length, provider: "mock" })
+    usage: createUsageLogEntry({
+      userId: input.userId,
+      type: "story_step",
+      quantity: steps.length,
+      provider: "mock",
+    }),
   };
 }

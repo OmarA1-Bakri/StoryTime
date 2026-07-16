@@ -5,7 +5,10 @@ type StorySessionContextValue = ReturnType<typeof useStorySession>;
 
 const StorySessionContext = createContext<StorySessionContextValue | null>(null);
 
-export function StorySessionProvider({ sessionId, children }: PropsWithChildren<{ sessionId: string }>) {
+export function StorySessionProvider({
+  sessionId,
+  children,
+}: PropsWithChildren<{ sessionId: string }>) {
   const value = useStorySession(sessionId);
   return <StorySessionContext.Provider value={value}>{children}</StorySessionContext.Provider>;
 }

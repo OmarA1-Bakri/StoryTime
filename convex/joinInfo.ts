@@ -17,7 +17,7 @@ export const getJoinInfo = query({
       phase: session.currentPhase,
       status: session.status,
       batonHolderParticipantId: session.batonHolderParticipantId,
-      activeSpeakerParticipantId: session.activeSpeakerParticipantId
+      activeSpeakerParticipantId: session.activeSpeakerParticipantId,
     };
-  }
+  },
 });

@@ -7,9 +7,8 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"No ui-tokens tests yet\"",
-    "test:unit": "echo \"No ui-tokens unit tests yet\"",
-    "test:e2e": "echo \"No ui-tokens e2e tests yet\"",
+    "test": "vitest run",
+    "test:unit": "vitest run",
     "build": "tsc --noEmit"
   },
   "devDependencies": {

@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:e2e": "echo \"No worker e2e tests yet\"",
+    "spike:composition": "node scripts/composition-spike.mjs",
     "build": "tsc --noEmit"
   },
   "dependencies": {

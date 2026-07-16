@@ -16,7 +16,7 @@ export const sessionStates = [
   "paused",
   "completed",
   "failed",
-  "abandoned"
+  "abandoned",
 ] as const;
 
 export type SessionState = (typeof sessionStates)[number];

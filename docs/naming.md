@@ -6,7 +6,7 @@ Technical names:
 
 - Repository: StoryTime
 - Root package: storytime
-- Workspace package namespace: @storytime/*
+- Workspace package namespace: @storytime/\*
 - Web package: @storytime/web
 - Mobile package: @storytime/mobile
 - Worker package: @storytime/worker

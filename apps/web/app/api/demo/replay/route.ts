@@ -11,7 +11,7 @@ export async function GET() {
       scenes: 8,
       storageBytes: 128000000,
       thumbnailUrl: null,
-      playbackUrl: null
-    }
+      playbackUrl: null,
+    },
   });
 }

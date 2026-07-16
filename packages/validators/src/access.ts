@@ -8,11 +8,11 @@ export const createAccessGrantSchema = z.object({
   profileId: z.string().min(1),
   requestedByUserId: z.string().min(1),
   targetUserId: z.string().min(1),
-  role: z.enum(["co_parent", "grandparent", "guardian"])
+  role: z.enum(["co_parent", "grandparent", "guardian"]),
 });
 
 export const revokeAccessGrantSchema = z.object({
   profileId: z.string().min(1),
   requesterUserId: z.string().min(1),
-  targetUserId: z.string().min(1)
+  targetUserId: z.string().min(1),
 });

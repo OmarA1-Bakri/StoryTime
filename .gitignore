@@ -6,6 +6,7 @@ build/
 .expo/
 .turbo/
 coverage/
+/output/playwright/
 .env
 .env.*
 !.env.example
@@ -17,3 +18,8 @@ yarn-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+# Expo bundle validation output
+apps/mobile/dist/
+apps/web/next-env.d.ts
+*.tsbuildinfo
+.vercel
