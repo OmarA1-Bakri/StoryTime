@@ -7,7 +7,7 @@
 | Last updated     | 2026-07-16                                     |
 | Product source   | [PRD.md](PRD.md)                               |
 | Current evidence | [docs/current-state.md](docs/current-state.md) |
-| Delivery tracker | Linear: `StoriTime MVP Build`                  |
+| Delivery tracker | Linear: `StoryTime MVP Delivery`               |
 
 This plan takes the existing scaffold to a deployed, verified web+iOS+Android product. It is ordered around the complete atomic chapter, not horizontal layers or polished mock screens.
 
@@ -44,11 +44,7 @@ A static demo, mock provider, placeholder script, web-only flow, typecheck-only 
 
 Only `DONE_VERIFIED` counts toward phase completion.
 
-Initial registry state on 2026-07-16:
-
-- `ST-000` is `IN_PROGRESS` on local branch `docs/canonical-product-build-plan` until reviewed/merged and external source preservation is resolved;
-- every other package is `NOT_STARTED` unless [docs/current-state.md](docs/current-state.md) links contrary merged/deployed evidence;
-- legacy Linear status never upgrades a package without the required proof.
+Initial registry state was superseded by the live evidence in [docs/current-state.md](docs/current-state.md). As of 2026-07-16, the integration branch and draft PR #2 put `ST-000` and `ST-002` in review; the reproducible workspace, truthful checks, and CI provide evidence for `ST-003`–`ST-005`; `ST-007` and `ST-009` are in progress; and the measured synthetic compositor provides `ST-012` evidence. Unmerged work and partial Linear status do not count as phase completion.
 
 Scheduling is deterministic: select the lowest numbered phase whose exit is incomplete, then the first `NOT_STARTED` package in that phase whose earlier required rows and explicit dependencies are `DONE_VERIFIED`. Work explicitly listed as safe parallelism may start concurrently; security/privacy blockers outrank numeric order.
 

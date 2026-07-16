@@ -1,14 +1,14 @@
 # StoryTime Current State
 
-| Field                         | Value                                                                                        |
-| ----------------------------- | -------------------------------------------------------------------------------------------- |
-| Snapshot date                 | 2026-07-16                                                                                   |
-| Default branch                | `main`                                                                                       |
-| Default-branch commit audited | `6b57b46057b10f90a8ca40d06c3bed28c8c3ae2b`                                                   |
-| Newest implementation branch  | `origin/agent/live-foundation` at `c343667`                                                  |
-| Canonical-doc work branch     | Local `codex/ST-000-canonical-baseline`; integration merge `a6c4e4c`; not yet pushed         |
-| Repository                    | [OmarA1-Bakri/StoryTime](https://github.com/OmarA1-Bakri/StoryTime)                          |
-| Linear project                | [StoriTime MVP Build](https://linear.app/leadscout/project/storitime-mvp-build-11d86b03b18e) |
+| Field                         | Value                                                                                              |
+| ----------------------------- | -------------------------------------------------------------------------------------------------- |
+| Snapshot date                 | 2026-07-16                                                                                         |
+| Default branch                | `main`                                                                                             |
+| Default-branch commit audited | `6b57b46057b10f90a8ca40d06c3bed28c8c3ae2b`                                                         |
+| Newest implementation branch  | `origin/agent/live-foundation` at `c343667`                                                        |
+| Integration work branch       | `codex/ST-000-canonical-baseline`; pushed in draft PR #2                                           |
+| Repository                    | [OmarA1-Bakri/StoryTime](https://github.com/OmarA1-Bakri/StoryTime)                                |
+| Linear project                | [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e) |
 
 This is an evidence snapshot, not a completion claim. Update it at phase boundaries and after material branch/deployment changes.
 
@@ -87,7 +87,7 @@ It changes 62 files and adds:
 
 [Draft PR #1](https://github.com/OmarA1-Bakri/StoryTime/pull/1) is open from `agent/live-foundation` to `main`, mergeable, and has a passing GitHub Actions run but no review. That CI uses a non-frozen install, a mutating format command, placeholder mobile/web/worker test gates, and a typecheck-only worker build, so it is not Phase 0 or release evidence. The branch must be reviewed and tested; it must not be blindly discarded or treated as merged.
 
-The local `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pack and merges all three `agent/live-foundation` commits. It remains local pending truthful Phase 0 gates and normal PR review; no remote branch history has been rewritten.
+The `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pack and merges all three `agent/live-foundation` commits. [Draft PR #2](https://github.com/OmarA1-Bakri/StoryTime/pull/2) is pushed for normal review. Its `workspace` GitHub Actions check passed from a clean checkout. No remote branch history was rewritten and the PR remains unmerged.
 
 The live provider adapters also predate this pack's verified under-13 controls. Before they receive real child data, review and test OpenAI ZDR capability, Groq ZDR/private clip delivery, fal no-store/private ACL and URL handling, plus the deletion/retention path. Existing adapter code or `store: false` alone is not readiness evidence.
 
@@ -117,9 +117,22 @@ The physical-device gate is deliberately separate. `pnpm check:device` executes 
 
 This is Phase 0 local engineering evidence, not proof of a working chapter or release. Existing web/worker tests still exercise demo, policy, provider-fixture, and media-plan slices rather than the complete production vertical.
 
-The repository homepage points to a Vercel URL, but this audit did not treat repository metadata as deployment verification.
+The repository is linked to Vercel project `storytime` under `omar-proj-canonical`, with `apps/web` as the project root and Node 22. The inherited project commands incorrectly used npm and caused prior deployments to fail. The project now uses the pinned pnpm workspace install and filtered web build. Preview deployment [`dpl_2U9tJj5kaRdsC7KMS6xfKuMasZUc`](https://vercel.com/omar-proj-canonical/storytime/2U9tJj5kaRdsC7KMS6xfKuMasZUc) completed successfully at [storytime-jxq3q7yug-omar-proj-canonical.vercel.app](https://storytime-jxq3q7yug-omar-proj-canonical.vercel.app). No production deployment or alias was changed.
 
-## 5. Documentation state before this pack
+## 5. Phase 0 spike evidence
+
+`ST-012` has a repeatable local synthetic composition spike. It creates two checksum-distinct H.264/AAC tracks, applies a two-event ordered ledger, emits a six-second 1280×720 H.264/AAC replay, verifies it with ffprobe, repeats the encode, and removes all scratch data.
+
+Measured on local FFmpeg 8.1.1:
+
+- output: 737,253 bytes, exactly 6.000 seconds, 48 kHz stereo audio;
+- deterministic repeat SHA-256: `105d300db01cd79fae4461e950ca1de4ab47fef00839a14f0b5749b47458acf3`;
+- Node 22.23.1 wall time: 1,899.66 ms; FFmpeg CPU: 2.016 s user / 0.438 s system; 3.61× realtime;
+- retained scratch before cleanup: 2,013,984 bytes; zero entries after cleanup.
+
+The spike proves only the synthetic sequential-ledger path. Scene layouts, captions, degraded intervals, and ±250 ms sync fixtures remain later composition work. `ST-010` remains blocked on LiveKit credentials/server and physical devices. `ST-011` remains blocked on approved Groq and fal capabilities/credentials; available OpenAI story and moderation adapters do not satisfy the full bounded audio-to-image spike.
+
+## 6. Documentation state before this pack
 
 The former:
 
@@ -130,26 +143,18 @@ The former:
 
 Those claims were materially stale. The canonical v1 documents replace them.
 
-## 6. Linear state
+## 7. Linear state
 
-The connected Linear project contains 60 issues:
+The connected Linear project was renamed from the legacy typo to [StoryTime MVP Delivery](https://linear.app/leadscout/project/storytime-mvp-delivery-11d86b03b18e), assigned an owner, and moved to `In Progress`. The initial reconciliation compared all 60 legacy issues with code and then updated the evidence-backed setup and partially implemented slices:
 
-- 13 marked `Done`;
-- 47 in `Backlog`;
-- 56 priority 2 and 4 priority 1;
-- project progress reported as ~21.7%;
-- no target date or active project lead.
+- verified scaffold/setup foundations LEA-16–20 were closed without claiming production readiness;
+- obsolete LEA-22 and LEA-23 were canceled and LEA-54 was linked as a duplicate of LEA-52;
+- deployment/protection inventory LEA-21, LEA-24, and LEA-25 were moved to `Todo` with current gaps;
+- truthful merge-gate work LEA-41 was moved to `In Review` with PR #2 and CI evidence;
+- partially implemented auth, consent, LiveKit, domain, AI, and storage tickets were moved to `In Progress` with explicit missing acceptance criteria;
+- [LEA-105](https://linear.app/leadscout/issue/LEA-105/st-007-reconcile-legacy-linear-backlog-with-canonical-plan) tracks completion of the remaining canonical phase/package mapping.
 
-Six setup issues remain in Backlog even though their descriptions claim completion:
-
-- LEA-16 Scaffold monorepo baseline
-- LEA-17 Discover Composio tool availability
-- LEA-18 Add env example and env guard placeholder
-- LEA-19 Create GitHub repository and labels
-- LEA-20 Create Mem0 canonical project memory
-- LEA-22 Prepare PRD ingestion workflow
-
-Other ticket states are also likely stale relative to code. For example, live-foundation implements portions of provider/auth/LiveKit work whose tickets remain Backlog.
+The remaining legacy parent/phase issues and missing v1 package tickets still require reconciliation before `ST-007` is complete.
 
 ### Required backlog action
 
@@ -160,7 +165,7 @@ Other ticket states are also likely stale relative to code. For example, live-fo
 - Add missing v1 epics for family tenancy, web parity, native call delivery, safety evals, egress/composition, deletion, app-store release, and beta.
 - Use the phase/work-package IDs in [../IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) as the new ordering.
 
-## 7. Source-material findings
+## 8. Source-material findings
 
 Reviewed:
 
@@ -186,17 +191,17 @@ The sources agree on:
 
 The v1 PRD resolves their conflicting spelling, web scope, consent ordering, low-bandwidth language, cloud-backup semantics, recorder layout, and deletion/ledger claims.
 
-## 8. Immediate critical path
+## 9. Immediate critical path
 
-1. Commit and open the integration branch for normal review; do not merge without CI and branch review.
-2. Reconcile Linear and complete the deployment/account/provider capability inventory.
-3. Measure the synthetic LiveKit, AI-turn, and composition spikes required for Phase 0 estimates.
+1. Complete review of integration PR #2 and merge only after required protection/review evidence.
+2. Finish the remaining Linear phase/package mapping and deployment/account/provider capability inventory.
+3. Measure the blocked synthetic LiveKit and full AI-turn spikes; preserve the completed composition evidence.
 4. Migrate identity/family/consent/state models before production data.
 5. Prove the two-adult, unrecorded-lobby, handoff, and recording boundary.
 6. Close processor ZDR/private-output and region gates using synthetic data.
 7. Complete one synthetic chapter vertically; the public/demo frontend polish is visual product work, not vertical acceptance evidence.
 
-## 9. Completion estimate policy
+## 10. Completion estimate policy
 
 No date is asserted until Phase 0 produces:
 
