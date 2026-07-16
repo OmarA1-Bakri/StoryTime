@@ -31,10 +31,17 @@ type CapabilityDefinition = {
   requiredVariables: string[];
   requiredValues?: Record<string, string>;
   requiredMinimumLengths?: Record<string, number>;
+  requiredLiveVariables?: string[];
+  requiredPatterns?: Record<string, RegExp>;
 };
 
 const definitions: CapabilityDefinition[] = [
-  { name: "backend", requiredVariables: ["NEXT_PUBLIC_CONVEX_URL"] },
+  {
+    name: "backend",
+    requiredVariables: ["NEXT_PUBLIC_CONVEX_URL", "STORYTIME_DATA_REGION"],
+    requiredLiveVariables: ["STORYTIME_DATA_REGION"],
+    requiredPatterns: { STORYTIME_DATA_REGION: /^[a-z0-9]+(?:-[a-z0-9]+)*$/ },
+  },
   {
     name: "identity",
     providerVariable: "IDENTITY_PROVIDER",
@@ -119,6 +126,9 @@ export function readProviderCapabilities(env: CapabilityEnvironment): ProviderCa
     const missingVariables = definition.requiredVariables.filter((key) => {
       const requiredValue = definition.requiredValues?.[key];
       const minimumLength = definition.requiredMinimumLengths?.[key];
+      const pattern = definition.requiredPatterns?.[key];
+      if (pattern && (!env[key] || !pattern.test(env[key]))) return true;
+      if (definition.requiredLiveVariables?.includes(key)) return !isLiveValue(env[key]);
       if (requiredValue !== undefined) return env[key] !== requiredValue;
       if (minimumLength !== undefined) return !env[key] || env[key].length < minimumLength;
       return !env[key];

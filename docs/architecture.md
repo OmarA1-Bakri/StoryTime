@@ -494,6 +494,10 @@ Convex stores metadata and bounded state only; documents must remain well below 
 
 All protected tables require family/resource indexes that support authorization without full-table scans.
 
+The additive ST-101 tenant schema, trusted creation boundary, profile-only migration bridge, and
+rollback constraints are detailed in [family-tenancy.md](family-tenancy.md). Membership, full
+resource propagation, and cross-family negatives remain later packages.
+
 ## 12. Job kinds
 
 The worker supports typed jobs:

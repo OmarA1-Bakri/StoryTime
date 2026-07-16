@@ -4,6 +4,7 @@ import { readProviderCapabilities, summarizeReadiness } from "./capabilities";
 const liveEnv = {
   APP_ENV: "production",
   NEXT_PUBLIC_CONVEX_URL: "https://example.convex.cloud",
+  STORYTIME_DATA_REGION: "eu-west-1",
   IDENTITY_PROVIDER: "clerk",
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_example",
   CLERK_SECRET_KEY: "sk_test_example",
@@ -58,6 +59,16 @@ describe("provider capability registry", () => {
       state: "missing",
       missingVariables: ["CLERK_SYNC_SECRET"],
     });
+  });
+
+  it("does not treat an unset or local family data region as a live backend", () => {
+    for (const STORYTIME_DATA_REGION of [undefined, "local", "EU West"]) {
+      const capabilities = readProviderCapabilities({ ...liveEnv, STORYTIME_DATA_REGION });
+      expect(capabilities.find((item) => item.name === "backend")).toMatchObject({
+        state: "missing",
+        missingVariables: ["STORYTIME_DATA_REGION"],
+      });
+    }
   });
 
   it("exposes missing infrastructure without leaking values", () => {

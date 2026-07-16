@@ -2,6 +2,7 @@ export * from "./access";
 export * from "./clerkIdentity";
 export * from "./connectionHealth";
 export * from "./consent";
+export * from "./familyTenant";
 export * from "./heartbeat";
 export * from "./plan";
 export * from "./planGate";
