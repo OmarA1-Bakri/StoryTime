@@ -6,8 +6,11 @@ import {
   FAMILY_MEMBERSHIP_MIGRATION_VERSION,
   FAMILY_PROFILE_ASSIGNMENT_SCHEMA_VERSION,
   authorizeFamilyCapability,
+  decideLegacyAssignmentWrite,
+  decideLegacyMemberWrite,
   familyMemberPolicyMetadataSchema,
   familyProfileAssignmentMetadataSchema,
+  planLegacyMembershipMigration,
 } from "./access";
 import type { FamilyCapability, FamilyRole } from "./access";
 
@@ -199,5 +202,117 @@ describe("canonical membership metadata", () => {
     expect(() =>
       familyProfileAssignmentMetadataSchema.parse({ ...current, schemaVersion: 2 }),
     ).toThrow();
+  });
+});
+
+describe("legacy membership migration planning", () => {
+  const safeBase = {
+    legacyRole: "guardian" as const,
+    legacyStatus: "active" as const,
+    adultStatus: "active" as const,
+    profileOwnerMatchesFamilyOwner: true,
+    isFamilyOwner: false,
+  };
+
+  it("caps active non-owner legacy grants at approved-adult profile access", () => {
+    expect(planLegacyMembershipMigration(safeBase)).toEqual({
+      action: "migrate",
+      role: "approved_adult",
+      canInviteApprovedAdults: false,
+      replayPermitted: false,
+    });
+  });
+
+  it("ignores a family owner's active legacy owner grant", () => {
+    expect(
+      planLegacyMembershipMigration({
+        ...safeBase,
+        legacyRole: "owner",
+        isFamilyOwner: true,
+      }),
+    ).toEqual({ action: "ignore", reason: "owner_already_canonical" });
+  });
+
+  it.each(["owner", "co_parent", "grandparent", "guardian"] as const)(
+    "ignores revoked legacy %s grants",
+    (legacyRole) => {
+      expect(
+        planLegacyMembershipMigration({
+          ...safeBase,
+          legacyRole,
+          legacyStatus: "revoked",
+          isFamilyOwner: legacyRole === "owner",
+        }),
+      ).toEqual({ action: "ignore", reason: "revoked" });
+    },
+  );
+
+  it.each(["missing", "disabled", "deleted"] as const)("rejects a %s adult", (adultStatus) => {
+    expect(
+      planLegacyMembershipMigration({
+        ...safeBase,
+        legacyRole: "guardian",
+        adultStatus,
+        isFamilyOwner: false,
+      }),
+    ).toEqual({ action: "conflict", reason: "adult_inactive" });
+  });
+
+  it("rejects a profile whose owner does not match the family owner", () => {
+    expect(
+      planLegacyMembershipMigration({
+        ...safeBase,
+        legacyRole: "guardian",
+        profileOwnerMatchesFamilyOwner: false,
+        isFamilyOwner: false,
+      }),
+    ).toEqual({ action: "conflict", reason: "profile_owner_mismatch" });
+  });
+
+  it.each(["co_parent", "grandparent", "guardian"] as const)(
+    "does not turn a family owner carrying legacy %s into a non-owner member",
+    (legacyRole) => {
+      expect(
+        planLegacyMembershipMigration({
+          ...safeBase,
+          legacyRole,
+          isFamilyOwner: true,
+        }),
+      ).toEqual({ action: "conflict", reason: "legacy_owner_mismatch" });
+    },
+  );
+});
+
+describe("legacy canonical write decisions", () => {
+  const member = {
+    role: "approved_adult" as const,
+    status: "active" as const,
+    canInviteApprovedAdults: false,
+    schemaVersion: FAMILY_MEMBER_SCHEMA_VERSION,
+    policyVersion: FAMILY_ACCESS_POLICY_VERSION,
+    migrationVersion: FAMILY_MEMBERSHIP_MIGRATION_VERSION,
+  };
+  const assignment = {
+    status: "active" as const,
+    replayPermitted: false,
+    schemaVersion: FAMILY_PROFILE_ASSIGNMENT_SCHEMA_VERSION,
+  };
+
+  it("creates missing records and reuses exact current records", () => {
+    expect(decideLegacyMemberWrite(undefined)).toBe("create");
+    expect(decideLegacyMemberWrite(member)).toBe("reuse");
+    expect(decideLegacyAssignmentWrite(undefined)).toBe("create");
+    expect(decideLegacyAssignmentWrite(assignment)).toBe("reuse");
+  });
+
+  it("fails closed for conflicting or future-version records", () => {
+    expect(decideLegacyMemberWrite({ ...member, role: "guardian" })).toBe("conflict");
+    expect(decideLegacyMemberWrite({ ...member, schemaVersion: 2 })).toBe("conflict");
+    expect(decideLegacyAssignmentWrite({ ...assignment, status: "revoked" })).toBe("conflict");
+    expect(decideLegacyAssignmentWrite({ ...assignment, schemaVersion: 2 })).toBe("conflict");
+  });
+
+  it("does not downgrade an existing explicit replay permission", () => {
+    expect(decideLegacyAssignmentWrite({ ...assignment, replayPermitted: true })).toBe("reuse");
   });
 });

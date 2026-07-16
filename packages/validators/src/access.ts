@@ -251,3 +251,89 @@ export function authorizeFamilyCapability(
 
   return { allowed: true };
 }
+
+export type LegacyAccessGrantRole = "owner" | "co_parent" | "grandparent" | "guardian";
+export type LegacyAccessGrantStatus = "active" | "invited" | "revoked";
+export type LegacyAdultStatus = "active" | "disabled" | "deleted" | "missing";
+
+export type LegacyMembershipMigrationInput = {
+  legacyRole: LegacyAccessGrantRole;
+  legacyStatus: LegacyAccessGrantStatus;
+  adultStatus: LegacyAdultStatus;
+  profileOwnerMatchesFamilyOwner: boolean;
+  isFamilyOwner: boolean;
+};
+
+export type LegacyMembershipMigrationPlan =
+  | { action: "ignore"; reason: "revoked" | "owner_already_canonical" }
+  | {
+      action: "conflict";
+      reason: "adult_inactive" | "profile_owner_mismatch" | "legacy_owner_mismatch" | "invited";
+    }
+  | {
+      action: "migrate";
+      role: "approved_adult";
+      canInviteApprovedAdults: false;
+      replayPermitted: false;
+    };
+
+export function planLegacyMembershipMigration(
+  input: LegacyMembershipMigrationInput,
+): LegacyMembershipMigrationPlan {
+  if (input.legacyStatus === "revoked") return { action: "ignore", reason: "revoked" };
+  if (input.legacyStatus === "invited") return { action: "conflict", reason: "invited" };
+  if (input.adultStatus !== "active") return { action: "conflict", reason: "adult_inactive" };
+  if (!input.profileOwnerMatchesFamilyOwner) {
+    return { action: "conflict", reason: "profile_owner_mismatch" };
+  }
+  if (input.isFamilyOwner) {
+    return input.legacyRole === "owner"
+      ? { action: "ignore", reason: "owner_already_canonical" }
+      : { action: "conflict", reason: "legacy_owner_mismatch" };
+  }
+  if (input.legacyRole === "owner") {
+    return { action: "conflict", reason: "legacy_owner_mismatch" };
+  }
+  return {
+    action: "migrate",
+    role: "approved_adult",
+    canInviteApprovedAdults: false,
+    replayPermitted: false,
+  };
+}
+
+type LegacyMemberCurrent = {
+  role: FamilyRole;
+  status: FamilyMemberStatus;
+  canInviteApprovedAdults: boolean;
+  schemaVersion: number;
+  policyVersion: number;
+  migrationVersion: number;
+};
+
+type LegacyAssignmentCurrent = {
+  status: FamilyMemberStatus;
+  replayPermitted: boolean;
+  schemaVersion: number;
+};
+
+export function decideLegacyMemberWrite(
+  current: LegacyMemberCurrent | undefined,
+): "create" | "reuse" | "conflict" {
+  if (!current) return "create";
+  const parsed = familyMemberPolicyMetadataSchema.safeParse(current);
+  return parsed.success &&
+    parsed.data.role === "approved_adult" &&
+    parsed.data.status === "active" &&
+    !parsed.data.canInviteApprovedAdults
+    ? "reuse"
+    : "conflict";
+}
+
+export function decideLegacyAssignmentWrite(
+  current: LegacyAssignmentCurrent | undefined,
+): "create" | "reuse" | "conflict" {
+  if (!current) return "create";
+  const parsed = familyProfileAssignmentMetadataSchema.safeParse(current);
+  return parsed.success && parsed.data.status === "active" ? "reuse" : "conflict";
+}
