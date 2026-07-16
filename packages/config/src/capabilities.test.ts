@@ -20,12 +20,16 @@ const liveEnv = {
   R2_BUCKET_PRIVATE: "private",
   STT_PROVIDER: "groq",
   GROQ_API_KEY: "groq-key",
+  GROQ_ZDR_ENABLED: "true",
   AI_MODE: "live",
   STORY_PROVIDER: "openai",
   OPENAI_API_KEY: "openai-key",
+  OPENAI_ZDR_APPROVED: "true",
   IMAGE_PROVIDER: "fal",
   FAL_KEY: "fal-key",
   FAL_IMAGE_ENDPOINT: "https://fal.example.com/model",
+  FAL_PRIVATE_OUTPUT_VERIFIED: "true",
+  FAL_MEDIA_RETENTION_VERIFIED: "true",
   SAFETY_PROVIDER: "openai",
   VPC_PROVIDER: "kws",
   BILLING_PROVIDER: "disabled",
@@ -51,5 +55,32 @@ describe("provider capability registry", () => {
     expect(
       readiness.capabilities.find((item) => item.name === "realtimeCall")?.missingVariables,
     ).toContain("LIVEKIT_API_SECRET");
+  });
+
+  it("requires explicit child-data control attestations for live AI providers", () => {
+    const capabilities = readProviderCapabilities({
+      ...liveEnv,
+      OPENAI_ZDR_APPROVED: "false",
+      GROQ_ZDR_ENABLED: "false",
+      FAL_PRIVATE_OUTPUT_VERIFIED: "false",
+      FAL_MEDIA_RETENTION_VERIFIED: "false",
+    });
+
+    expect(capabilities.find((item) => item.name === "story")).toMatchObject({
+      state: "missing",
+      missingVariables: ["OPENAI_ZDR_APPROVED"],
+    });
+    expect(capabilities.find((item) => item.name === "safety")).toMatchObject({
+      state: "missing",
+      missingVariables: ["OPENAI_ZDR_APPROVED"],
+    });
+    expect(capabilities.find((item) => item.name === "stt")).toMatchObject({
+      state: "missing",
+      missingVariables: ["GROQ_ZDR_ENABLED"],
+    });
+    expect(capabilities.find((item) => item.name === "image")).toMatchObject({
+      state: "missing",
+      missingVariables: ["FAL_PRIVATE_OUTPUT_VERIFIED", "FAL_MEDIA_RETENTION_VERIFIED"],
+    });
   });
 });

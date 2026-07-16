@@ -91,17 +91,11 @@ The `codex/ST-000-canonical-baseline` branch preserves the supplied canonical pa
 
 The `main` branch now requires the `workspace` status check on an up-to-date branch, one approving review, dismissal of stale reviews, and resolved conversations. Force-push and branch deletion are disabled. GitHub secret scanning and push protection are enabled; the alerts API reports zero open alerts. Admin bypass remains available for repository recovery, but the normal merge path is protected.
 
-The live provider adapters also predate this pack's verified under-13 controls. Before they receive real child data, review and test OpenAI ZDR capability, Groq ZDR/private clip delivery, fal no-store/private ACL and URL handling, plus the deletion/retention path. Existing adapter code or `store: false` alone is not readiness evidence.
+The live provider adapters now fail closed unless OpenAI ZDR, Groq ZDR, fal private-output, and fal media-retention attestations are exactly `true`. The central production capability registry enforces the same controls, and the web prebuild runs the production environment guard. These flags record verified account state; they do not configure a provider or replace the remaining legal, regional, deletion, synthetic-spike, and processor review. No real child data was sent.
 
-### Required recovery action
+### Remaining recovery action
 
-1. Preserve `agent/live-foundation`.
-2. Rebase or merge the current `main` documentation baseline into a dedicated integration branch.
-3. Install with Node 22 and pinned pnpm using its lockfile.
-4. Run the full available gates.
-5. Review auth, consent, LiveKit token, provider, logging, and client-secret boundaries.
-6. Open a PR with evidence.
-7. Merge only after failures and documentation conflicts are resolved.
+The source preservation, integration merge, pinned install, available gates, boundary review, and evidence-bearing draft PR are complete. PR #2 must still receive the independent approval required by branch protection and be merged without bypassing the green `workspace` check.
 
 ## 4. Build and tooling state
 

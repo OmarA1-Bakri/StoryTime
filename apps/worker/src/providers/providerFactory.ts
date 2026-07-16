@@ -18,6 +18,7 @@ export function resolveWorkerProviderMode(value: string | undefined): WorkerProv
 export function createStoryProvider() {
   if (!isLive()) return new MockStructuredStoryProvider();
   const key = required("OPENAI_API_KEY");
+  requiredControl("OPENAI_ZDR_APPROVED");
   return new SafeStoryProvider(
     new OpenAiStructuredStoryProvider(key, process.env.OPENAI_STORY_MODEL),
     new OpenAiSafetyProvider(key, process.env.OPENAI_MODERATION_MODEL),
@@ -25,9 +26,10 @@ export function createStoryProvider() {
 }
 
 export function createTextProvider() {
-  return isLive()
-    ? new GroqTextProvider(required("GROQ_API_KEY"), process.env.GROQ_STT_MODEL)
-    : new MockTextProvider();
+  if (!isLive()) return new MockTextProvider();
+  const key = required("GROQ_API_KEY");
+  requiredControl("GROQ_ZDR_ENABLED");
+  return new GroqTextProvider(key, process.env.GROQ_STT_MODEL);
 }
 
 export function createTrackOutputProvider() {
@@ -47,15 +49,19 @@ export function createReviewProvider() {
 }
 
 export function createSafetyProvider() {
-  return isLive()
-    ? new OpenAiSafetyProvider(required("OPENAI_API_KEY"), process.env.OPENAI_MODERATION_MODEL)
-    : new MockSafetyProvider();
+  if (!isLive()) return new MockSafetyProvider();
+  const key = required("OPENAI_API_KEY");
+  requiredControl("OPENAI_ZDR_APPROVED");
+  return new OpenAiSafetyProvider(key, process.env.OPENAI_MODERATION_MODEL);
 }
 
 export function createImageProvider() {
-  return isLive()
-    ? new FalImageProvider(required("FAL_KEY"), required("FAL_IMAGE_ENDPOINT"))
-    : new MockImageProvider();
+  if (!isLive()) return new MockImageProvider();
+  const key = required("FAL_KEY");
+  const endpoint = required("FAL_IMAGE_ENDPOINT");
+  requiredControl("FAL_PRIVATE_OUTPUT_VERIFIED");
+  requiredControl("FAL_MEDIA_RETENTION_VERIFIED");
+  return new FalImageProvider(key, endpoint);
 }
 
 function isLive() {
@@ -67,4 +73,12 @@ function required(name: string): string {
   if (!value)
     throw new Error(`${name} is required in live AI mode; refusing to fall back to mock output`);
   return value;
+}
+
+function requiredControl(name: string): void {
+  if (process.env[name] !== "true") {
+    throw new Error(
+      `${name} must be true in live AI mode; refusing to process child data without verified controls`,
+    );
+  }
 }

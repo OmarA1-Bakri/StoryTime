@@ -29,6 +29,7 @@ type CapabilityDefinition = {
   modeVariable?: string;
   providerVariable?: string;
   requiredVariables: string[];
+  requiredValues?: Record<string, string>;
 };
 
 const definitions: CapabilityDefinition[] = [
@@ -62,19 +63,39 @@ const definitions: CapabilityDefinition[] = [
       "R2_BUCKET_PRIVATE",
     ],
   },
-  { name: "stt", providerVariable: "STT_PROVIDER", requiredVariables: ["GROQ_API_KEY"] },
+  {
+    name: "stt",
+    providerVariable: "STT_PROVIDER",
+    requiredVariables: ["GROQ_API_KEY", "GROQ_ZDR_ENABLED"],
+    requiredValues: { GROQ_ZDR_ENABLED: "true" },
+  },
   {
     name: "story",
     modeVariable: "AI_MODE",
     providerVariable: "STORY_PROVIDER",
-    requiredVariables: ["OPENAI_API_KEY"],
+    requiredVariables: ["OPENAI_API_KEY", "OPENAI_ZDR_APPROVED"],
+    requiredValues: { OPENAI_ZDR_APPROVED: "true" },
   },
   {
     name: "image",
     providerVariable: "IMAGE_PROVIDER",
-    requiredVariables: ["FAL_KEY", "FAL_IMAGE_ENDPOINT"],
+    requiredVariables: [
+      "FAL_KEY",
+      "FAL_IMAGE_ENDPOINT",
+      "FAL_PRIVATE_OUTPUT_VERIFIED",
+      "FAL_MEDIA_RETENTION_VERIFIED",
+    ],
+    requiredValues: {
+      FAL_PRIVATE_OUTPUT_VERIFIED: "true",
+      FAL_MEDIA_RETENTION_VERIFIED: "true",
+    },
   },
-  { name: "safety", providerVariable: "SAFETY_PROVIDER", requiredVariables: ["OPENAI_API_KEY"] },
+  {
+    name: "safety",
+    providerVariable: "SAFETY_PROVIDER",
+    requiredVariables: ["OPENAI_API_KEY", "OPENAI_ZDR_APPROVED"],
+    requiredValues: { OPENAI_ZDR_APPROVED: "true" },
+  },
   { name: "consent", providerVariable: "VPC_PROVIDER", requiredVariables: [] },
   { name: "billing", providerVariable: "BILLING_PROVIDER", requiredVariables: [] },
 ];
@@ -89,7 +110,10 @@ export function readProviderCapabilities(env: CapabilityEnvironment): ProviderCa
       ? (env[definition.providerVariable] ?? null)
       : null;
     const mode = definition.modeVariable ? env[definition.modeVariable] : undefined;
-    const missingVariables = definition.requiredVariables.filter((key) => !env[key]);
+    const missingVariables = definition.requiredVariables.filter((key) => {
+      const requiredValue = definition.requiredValues?.[key];
+      return requiredValue === undefined ? !env[key] : env[key] !== requiredValue;
+    });
     const explicitlyMock = provider === "mock" || mode === "mock" || mode === "local";
     const providerConfigured = definition.providerVariable
       ? isLiveValue(provider ?? undefined)

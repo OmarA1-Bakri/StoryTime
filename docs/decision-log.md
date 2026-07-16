@@ -33,6 +33,7 @@ No owner approval was recorded during this synthesis. `Source-derived` means the
 | `ADR-027` | 2026-07-16 | Provisional    | Keep the reproducible merge gate separate from physical-device Maestro evidence; combine both only in the release gate                                                                                                       | CI truthfulness and current device/tool availability                    |
 | `ADR-028` | 2026-07-16 | Provisional    | Use a deterministic FFmpeg sequential-ledger composition spike as the Phase 0 replay baseline; expand it with layouts, captions, degraded intervals, and sync fixtures in Phase 5                                            | Measured ST-012 synthetic evidence; media engineering review pending    |
 | `ADR-029` | 2026-07-16 | Provisional    | Migrate the scaffold schema and state machines additively: version new records/events, backfill non-production data, verify dual-read parity, cut writers/readers, then remove legacy fields in a later reversible migration | No linked production Convex deployment; backend/security review pending |
+| `ADR-030` | 2026-07-16 | Provisional    | Provider privacy controls are exact attestations enforced by the registry, production prebuild, and live worker constructors; credentials alone never enable child-data processing                                           | Provider policies; legal/privacy and account verification pending       |
 
 ## ADR-001 — Setup-only phase
 
@@ -53,6 +54,10 @@ The Phase 0 compositor uses two generated H.264/AAC sources plus a monotonic two
 ## ADR-029 — Additive schema and state migration
 
 The current generic `status` fields and conflated session/chapter/recording lifecycle are migration inputs, not contracts to preserve. New family, membership, call, chapter, recording, composition, asset, event, and job records use strict versioned schemas and explicit transition versions. Migrations first add fields/tables/indexes, then backfill synthetic/dev data idempotently, verify old/new read parity, move trusted writers and readers, and only later remove legacy paths after a clean backup/restore and rollback rehearsal. Unknown versions fail closed at authorization/media boundaries. No destructive production migration may be inferred from this decision; the production Convex project, region, backup, and data inventory must be verified first.
+
+## ADR-030 — Provider-control attestations
+
+OpenAI ZDR approval, Groq ZDR enablement, fal private output, and fal media-retention verification are represented as explicit environment attestations whose only accepted live value is `true`. They default to `false`. The capability registry reports each false or absent attestation as missing, the production web prebuild invokes the environment guard, and worker constructors repeat the provider-specific check before creating a live adapter. An attestation records a verified account control; it does not change provider settings and may be set only after account evidence and the required legal/privacy review exist. This layered refusal prevents a credential-only configuration from processing child data while keeping local mock development deterministic.
 
 ## Pending owner/pre-production decisions
 
